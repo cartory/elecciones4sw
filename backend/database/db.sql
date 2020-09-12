@@ -2,6 +2,7 @@
 
 create TABLE if not EXISTS localidades (
   id serial PRIMARY KEY,
+  tipo varchar(20),
   nombre VARCHAR(30),
   circunscripcion INTEGER,
   localidad_id INTEGER
