@@ -4,7 +4,11 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "jest test/main.test"
+    "dev"  : "nodemon main",
+    "start": "node build/main",
+    "build": "babel main.js --out-dir build",
+    "test": "jest test/main.test --exit",
+    "seed": "node database/database.seeder --exit"
   },
   "repository": {
     "type": "git",
@@ -17,13 +21,20 @@
   },
   "homepage": "https://github.com/cartory/elecciones4sw#readme",
   "dependencies": {
+    "pg": "^8.3.3",
     "cors": "^2.8.5",
+    "morgan": "^1.10.0",
     "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5",
+    "@babel/polyfill": "^7.11.5"
   },
   "devDependencies": {
-    "faker": "^5.1.0",
     "jest": "^26.4.2",
-    "nodemon": "^2.0.4"
+    "faker": "^5.1.0",
+    "nodemon": "^2.0.4",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5"
   }
 }
