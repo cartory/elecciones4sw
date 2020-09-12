@@ -28,8 +28,9 @@ create table if not EXISTS mesas (
 
 create TABLE if not EXISTS partidos(
   id serial PRIMARY KEY,
+  nombre VARCHAR(50),
   icono text,
-  sigla VARCHAR(20)
+  sigla VARCHAR(20) not null
 );
 
 create TABLE if not EXISTS votos (

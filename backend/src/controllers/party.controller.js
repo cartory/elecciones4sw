@@ -1,8 +1,16 @@
-// const 
+const { Party } = require("../models/party");
 
 class PartyController {
     static all(req, res) {
-        res.send("get all parties");
+        Party
+            .findAll()
+            .then(parties => {
+                res.json(parties);
+            })
+            .catch((e) => {
+                console.error(e);
+                res.json(e);
+            });
     }
 
     static find(req, res) {
@@ -10,7 +18,7 @@ class PartyController {
     }
 
     static store(req, res) {
-        res.send("create party");
+        res.send("response");
     }
 
     static update(req, res) {
