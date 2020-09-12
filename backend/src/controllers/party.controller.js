@@ -1,4 +1,4 @@
-const { Party } = require("../models/party");
+const Party = require("../models/party");
 
 class PartyController {
     static all(req, res) {
@@ -7,26 +7,61 @@ class PartyController {
             .then(parties => {
                 res.json(parties);
             })
-            .catch((e) => {
-                console.error(e);
+            .catch(e => {
                 res.json(e);
             });
     }
 
     static find(req, res) {
-        res.send("find party");
+        Party
+            .findOne({
+                where: { id: req.params.id }
+            })
+            .then(party => {
+                res.json(party);
+            })
+            .catch(e => {
+                res.json(e);
+            });
     }
 
     static store(req, res) {
-        res.send("response");
+        const { nombre, icono, sigla } = req.body;
+        Party
+            .create({
+                nombre, icono, sigla
+            }, {
+                fields: ["nombre", "icono", "sigla"]
+            }).then(party => {
+                res.json(party);
+            }).catch(e => {
+                res.json(e);
+            });
     }
 
     static update(req, res) {
-        res.send("update party");
+        const { nombre, icono, sigla } = req.body;
+        Party
+            .update({
+                nombre, icono, sigla
+            }, { where: { id: req.params.id } })
+            .then(val => {
+                res.json(val);
+            })
+            .catch(e => {
+                res.json(e);
+            });
     }
 
     static destroy(req, res) {
-        res.send("destroy party");
+        Party
+            .destroy({ where: { id: req.params.id } })
+            .then(number => {
+                res.json(number);
+            })
+            .catch(e => {
+                res.json(e);
+            });
     }
 }
 

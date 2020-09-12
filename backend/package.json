@@ -7,7 +7,7 @@
     "dev": "nodemon src/app",
     "start": "node build/app",
     "build": "babel src -d build",
-    "test": "jest test/main.test --exit",
+    "test": "jest test/main.test",
     "seed": "node database/database.seeder --exit"
   },
   "repository": {

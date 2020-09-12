@@ -14,7 +14,7 @@ Party.init({
 }, {
     sequelize,
     tableName: "partidos",
-    modelName: "partidos"
+    modelName: "partidos",
 });
 
-module.exports = { Party };
+module.exports = Party;
