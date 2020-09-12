@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest test/main.test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cartory/elecciones4sw.git"
+  },
+  "author": "cartory",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cartory/elecciones4sw/issues"
+  },
+  "homepage": "https://github.com/cartory/elecciones4sw#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "faker": "^5.1.0",
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4"
+  }
+}
