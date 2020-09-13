@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../database/sequelize");
-const { Location } = require("./location");
 
 class Precinct extends Model { }
 

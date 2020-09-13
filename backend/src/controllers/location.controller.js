@@ -1,4 +1,4 @@
-const { Location } = require("../models/associations");
+const { Location } = require("../database/associations");
 
 class LocationController {
     static all(req, res) {

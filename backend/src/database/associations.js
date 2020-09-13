@@ -1,5 +1,5 @@
-const { Location } = require("./location");
-const { Precinct } = require("./precinct");
+const { Location } = require("../models/location");
+const { Precinct } = require("../models/precinct");
 
 // locations -> location
 Location.hasMany(Location);
