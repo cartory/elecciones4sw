@@ -1,4 +1,4 @@
-const { Party } = require("../models/party");
+const { Party } = require("../database/associations");
 
 class PartyController {
     static all(req, res) {
