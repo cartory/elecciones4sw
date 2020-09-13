@@ -8,14 +8,11 @@ Location.init({
         type: DataTypes.INTEGER,
         primaryKey: true,
     },
-    tipo: DataTypes.STRING,
-    nombre: DataTypes.STRING,
-    circunscripcion: DataTypes.INTEGER,
-    localidad_id: DataTypes.INTEGER
+    type: DataTypes.STRING,
+    name: DataTypes.STRING,
+    district: DataTypes.INTEGER,
 }, {
     sequelize,
-    tableName: "localidades",
-    modelName: "localidades",
 });
 
 module.exports = { Location };

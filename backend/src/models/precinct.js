@@ -10,11 +10,8 @@ Precinct.init({
         primaryKey: true,
     },
     nombre: DataTypes.STRING,
-    localidad_id: DataTypes.INTEGER,
 }, {
     sequelize,
-    tableName: "recintos",
-    modelName: "recintos",
 });
 
 module.exports = { Precinct };

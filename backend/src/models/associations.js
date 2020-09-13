@@ -2,12 +2,12 @@ const { Location } = require("./location");
 const { Precinct } = require("./precinct");
 
 // locations -> location
-Location.hasMany(Location, { foreignKey: "localidad_id", as: "parts" });
-Location.belongsTo(Location, { as: "from" });
+Location.hasMany(Location);
+Location.belongsTo(Location);
 // precincts -> location
-Location.hasMany(Precinct, { foreignKey: "localidad_id", as: "precincts" });
-Precinct.belongsTo(Location, { as: "location" });
-// 
+Location.hasMany(Precinct);
+Precinct.belongsTo(Location);
+
 module.exports = {
     Location,
     Precinct,

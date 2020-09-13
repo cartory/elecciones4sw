@@ -10,6 +10,7 @@ class App {
         this.app = express();
         this.config();
         this.routes();
+        this.sync();
     }
 
     config() {
@@ -33,15 +34,25 @@ class App {
         });
         this.connectDB();
     }
-    
+
+    sync() {
+        sequelize
+            .sync()
+            .then(val => {
+                console.log(`\x1b[32mDB SYNC Successfully!!\x1b[0m`);
+            }).catch(e => {
+                console.error(e);
+            });
+    }
+
     connectDB() {
         sequelize
             .authenticate()
             .then(() => {
                 console.log(`\x1b[32mDB Connected Successfully!!\x1b[0m`);
             })
-            .catch((error) => {
-                console.error(error);
+            .catch((e) => {
+                console.error(e);
             });
     }
 }

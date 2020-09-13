@@ -13,8 +13,6 @@ Party.init({
     sigla: DataTypes.STRING
 }, {
     sequelize,
-    tableName: "partidos",
-    modelName: "partidos",
 });
 
 module.exports = { Party };
