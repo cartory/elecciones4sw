@@ -3,6 +3,7 @@ const router = Router();
 // CONTROLLERS
 const { PartyController } = require("./controllers/party.controller");
 const { LocationController } = require("./controllers/location.controller");
+const { PrecinctController } = require("./controllers/precinct.controller");
 // ROUTES
 router
     // PARTIDOS
@@ -16,6 +17,12 @@ router
     .post("/locations", LocationController.store)
     .get("/locations/:id", LocationController.find)
     .put("/locations/:id", LocationController.update)
-    .delete("/locations/:id", LocationController.destroy);
+    .delete("/locations/:id", LocationController.destroy)
+    // PRECICNTS
+    .get("/precincts", PrecinctController.all)
+    .post("/precincts", PrecinctController.store)
+    .get("/precincts/:id", PrecinctController.find)
+    .put("/precincts/:id", PrecinctController.update)
+    .delete("/precincts/:id", PrecinctController.destroy);
 
 module.exports = router;

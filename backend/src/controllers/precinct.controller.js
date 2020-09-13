@@ -1,22 +1,22 @@
-const { Location } = require("../models/location");
+const { Precinct } = require("../models/precinct");
 
-class LocationController {
+class PrecinctController {
     static all(req, res) {
-        Location
+        Precinct
             .findAll()
-            .then(locs => {
-                res.json(locs);
+            .then(data => {
+                res.json(data);
             }).catch(e => {
                 res.json(e);
             });
     }
 
     static find(req, res) {
-        Location
+        Precinct
             .findOne({
                 where: { id: req.params.id }
-            }).then(loc => {
-                res.json(loc);
+            }).then(data => {
+                res.json(data);
             }).catch(e => {
                 res.json(e);
             });
@@ -24,18 +24,16 @@ class LocationController {
 
     static store(req, res) {
         const {
-            tipo, nombre, circunscripcion = null, localidad_id = null
+            nombre, localidad_id = null
         } = req.body;
 
-        Location
+        Precinct
             .create({
-                tipo, nombre, circunscripcion, localidad_id
+                nombre, localidad_id
             }, {
-                fields: [
-                    "tipo", "nombre", "circunscripcion", "localidad_id",
-                ]
-            }).then(loc => {
-                res.json(loc);
+                fields: ["nombre", "localidad_id"]
+            }).then(data => {
+                res.json(data);
             }).catch(e => {
                 res.json(e);
             });
@@ -43,11 +41,11 @@ class LocationController {
 
     static update(req, res) {
         const {
-            tipo, nombre, circunscripcion, localidad_id
+            nombre, localidad_id
         } = req.body;
-        Location
+        Precinct
             .update({
-                tipo, nombre, circunscripcion, localidad_id
+                nombre, localidad_id
             }, { where: { id: req.params.id } })
             .then(val => {
                 res.json(val);
@@ -57,7 +55,7 @@ class LocationController {
     }
 
     static destroy(req, res) {
-        Location
+        Precinct
             .destroy({ where: { id: req.params.id } })
             .then(number => {
                 res.json(number);
@@ -67,4 +65,4 @@ class LocationController {
     }
 }
 
-module.exports = { LocationController };
+module.exports = { PrecinctController };
