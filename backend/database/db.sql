@@ -14,7 +14,8 @@ REFERENCES localidades(id);
 
 CREATE TABLE if not EXISTS recintos (
   id serial PRIMARY KEY,
-  nombre VARCHAR(30)
+  nombre VARCHAR(30),
+  localidad_id INTEGER REFERENCES localidades(id)
 );
 
 create table if not EXISTS mesas (
