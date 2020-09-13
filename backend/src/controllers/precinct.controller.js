@@ -1,4 +1,4 @@
-const { Precinct } = require("../models/precinct");
+const { Precinct } = require("../models/associations");
 
 class PrecinctController {
     static all(req, res) {

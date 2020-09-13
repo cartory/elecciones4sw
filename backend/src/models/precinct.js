@@ -17,6 +17,4 @@ Precinct.init({
     modelName: "recintos",
 });
 
-Precinct.belongsTo(Location, { foreignKey: "localidad_id" });
-
 module.exports = { Precinct };
