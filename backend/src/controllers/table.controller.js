@@ -1,41 +1,43 @@
-const { Location } = require("../database/associations");
+const { Table } = require("../database/associations");
 
-class LocationController {
+class TableController {
     static all(req, res) {
-        Location
+        Table
             .findAll()
-            .then(locs => {
-                res.json(locs);
-            }).catch(e => {
+            .then(data => {
+                res.json(data);
+            })
+            .catch(e => {
                 res.json(e);
             });
     }
 
     static find(req, res) {
-        Location
+        Table
             .findOne({
                 where: { id: req.params.id }
-            }).then(loc => {
-                res.json(loc);
-            }).catch(e => {
+            })
+            .then(data => {
+                res.json(data);
+            })
+            .catch(e => {
                 res.json(e);
             });
     }
 
     static store(req, res) {
         const {
-            type, name, district = null, location_id = null
+            code, number, open, close, precinct_id = null
         } = req.body;
-
-        Location
+        Table
             .create({
-                type, name, district, location_id
+                code, number, open, close, precinct_id
             }, {
                 fields: [
-                    "type", "name", "district", "location_id",
+                    "code", "number", "open", "close", "precinct_id" 
                 ]
-            }).then(loc => {
-                res.json(loc);
+            }).then(party => {
+                res.json(party);
             }).catch(e => {
                 res.json(e);
             });
@@ -43,28 +45,30 @@ class LocationController {
 
     static update(req, res) {
         const {
-            type, name, district = null, location_id = null
+            code, number, open, close, precinct_id = null
         } = req.body;
-        Location
+        Table
             .update({
-                type, name, district, location_id
+                code, number, open, close, precinct_id
             }, { where: { id: req.params.id } })
             .then(val => {
                 res.json(val);
-            }).catch(e => {
+            })
+            .catch(e => {
                 res.json(e);
             });
     }
 
     static destroy(req, res) {
-        Location
+        Table
             .destroy({ where: { id: req.params.id } })
             .then(number => {
                 res.json(number);
-            }).catch(e => {
+            })
+            .catch(e => {
                 res.json(e);
             });
     }
 }
 
-module.exports = { LocationController };
+module.exports = { TableController };

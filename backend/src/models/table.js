@@ -1,16 +1,19 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../database/sequelize");
 
-class Precinct extends Model { }
+class Table extends Model { }
 
-Precinct.init({
+Table.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
     },
-    name: DataTypes.STRING,
+    code: DataTypes.BIGINT.UNSIGNED,
+    number: DataTypes.INTEGER.UNSIGNED,
+    open: DataTypes.DATE,
+    close: DataTypes.DATE,
 }, {
     sequelize,
 });
 
-module.exports = { Precinct };
+module.exports = { Table };

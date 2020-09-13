@@ -8,9 +8,9 @@ Party.init({
         type: DataTypes.INTEGER,
         primaryKey: true,
     },
-    nombre: DataTypes.STRING,
-    icono: DataTypes.TEXT,
-    sigla: DataTypes.STRING
+    name: DataTypes.STRING,
+    icon: DataTypes.TEXT,
+    acronym: DataTypes.STRING
 }, {
     sequelize,
 });

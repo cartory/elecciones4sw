@@ -26,12 +26,12 @@ class PartyController {
     }
 
     static store(req, res) {
-        const { nombre, icono, sigla } = req.body;
+        const { name, icon, acronym } = req.body;
         Party
             .create({
-                nombre, icono, sigla
+                name, icon, acronym
             }, {
-                fields: ["nombre", "icono", "sigla"]
+                fields: ["name", "icon", "acronym"]
             }).then(party => {
                 res.json(party);
             }).catch(e => {
@@ -40,10 +40,10 @@ class PartyController {
     }
 
     static update(req, res) {
-        const { nombre, icono, sigla } = req.body;
+        const { name, icon, acronym } = req.body;
         Party
             .update({
-                nombre, icono, sigla
+                name, icon, acronym
             }, { where: { id: req.params.id } })
             .then(val => {
                 res.json(val);

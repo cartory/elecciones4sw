@@ -23,15 +23,13 @@ class PrecinctController {
     }
 
     static store(req, res) {
-        const {
-            nombre, localidad_id = null
-        } = req.body;
+        const { name, location_id = null } = req.body;
 
         Precinct
             .create({
-                nombre, localidad_id
+                name, location_id
             }, {
-                fields: ["nombre", "localidad_id"]
+                fields: ["name", "location_id"]
             }).then(data => {
                 res.json(data);
             }).catch(e => {
@@ -40,12 +38,10 @@ class PrecinctController {
     }
 
     static update(req, res) {
-        const {
-            nombre, localidad_id
-        } = req.body;
+        const { name, location_id = null } = req.body;
         Precinct
             .update({
-                nombre, localidad_id
+                name, location_id
             }, { where: { id: req.params.id } })
             .then(val => {
                 res.json(val);

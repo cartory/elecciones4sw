@@ -10,7 +10,7 @@ const sequelize = new Sequelize({
     dialect: process.env.DB_DIAL,
     define: {
         timestamps: false,
-        deletedAt: true,
+        deletedAt: false,
     }
 });
 

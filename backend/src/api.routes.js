@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 // CONTROLLERS
 const { PartyController } = require("./controllers/party.controller");
+const { TableController } = require("./controllers/table.controller");
 const { LocationController } = require("./controllers/location.controller");
 const { PrecinctController } = require("./controllers/precinct.controller");
 // ROUTES
@@ -23,6 +24,11 @@ router
     .post("/precincts", PrecinctController.store)
     .get("/precincts/:id", PrecinctController.find)
     .put("/precincts/:id", PrecinctController.update)
-    .delete("/precincts/:id", PrecinctController.destroy);
-
+    .delete("/precincts/:id", PrecinctController.destroy)
+    // TABLES
+    .get("/tables", TableController.all)
+    .post("/tables", TableController.store)
+    .get("/tables/:id", TableController.find)
+    .put("/tables/:id", TableController.update)
+    .delete("/tables/:id", TableController.destroy);
 module.exports = router;
