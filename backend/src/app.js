@@ -33,7 +33,7 @@ class App {
         });
         this.connectDB();
     }
-
+    
     connectDB() {
         sequelize
             .authenticate()

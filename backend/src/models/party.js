@@ -17,4 +17,4 @@ Party.init({
     modelName: "partidos",
 });
 
-module.exports = Party;
+module.exports = { Party };

@@ -1,4 +1,4 @@
-const Party = require("../models/party");
+const { Party } = require("../models/party");
 
 class PartyController {
     static all(req, res) {
