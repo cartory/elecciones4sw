@@ -5,11 +5,13 @@ class Table extends Model { }
 
 Table.init({
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         primaryKey: true,
+        autoIncrement: true,
+        autoIncrementIdentity: true,
     },
-    code: DataTypes.BIGINT.UNSIGNED,
-    number: DataTypes.INTEGER.UNSIGNED,
+    code: DataTypes.BIGINT,
+    number: DataTypes.INTEGER,
     open: DataTypes.DATE,
     close: DataTypes.DATE,
 }, {

@@ -5,7 +5,7 @@ class Vote extends Model { }
 
 Vote.init({
     type: DataTypes.ENUM("invalid", "white", "valid"),
-    amount: DataTypes.BIGINT.UNSIGNED,
+    amount: DataTypes.BIGINT,
     position: DataTypes.ENUM("president", "deputy"),
 }, {
     sequelize,

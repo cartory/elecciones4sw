@@ -7,6 +7,8 @@ Party.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
+        autoIncrementIdentity: true,
     },
     name: DataTypes.STRING,
     icon: DataTypes.TEXT,

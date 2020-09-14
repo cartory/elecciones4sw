@@ -5,8 +5,10 @@ class Precinct extends Model { }
 
 Precinct.init({
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         primaryKey: true,
+        autoIncrement: true,
+        autoIncrementIdentity: true,
     },
     name: DataTypes.STRING,
 }, {
