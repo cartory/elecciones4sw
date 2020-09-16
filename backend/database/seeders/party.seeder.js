@@ -2,7 +2,7 @@ const { Party } = require("../../src/database/associations");
 
 class PartySeeder {
     // seed parties
-    static seed() {
+    static async seed() {
         const names = [
             "Acción Democrática Nacionalista",
             "Creemos",
@@ -37,17 +37,13 @@ class PartySeeder {
         ];
 
         for (let i = 0; i < names.length; i++) {
-            Party.create({
+            await Party.create({
                 name: names[i],
                 icon: icons[i],
                 acronym: acros[i],
             }, {
                 fields: ["name", "icon", "acronym"],
                 isNewRecord: true,
-            }).then(data => {
-                console.log(data);
-            }).catch(e => {
-                console.error(e);
             });
         }
     }

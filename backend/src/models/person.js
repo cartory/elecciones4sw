@@ -17,18 +17,33 @@ Person.init({
     phone: DataTypes.BIGINT,
     birthdate : DataTypes.DATE,
     address: DataTypes.STRING, 
-    gender: DataTypes.ENUM("M", "F"),
+    gender: DataTypes.CHAR,
     // 
-    vowel: DataTypes.BOOLEAN,
-    president: DataTypes.BOOLEAN,
-    delegate: DataTypes.BOOLEAN,
-    secretary: DataTypes.BOOLEAN,
+    vowel: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    president: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    delegate: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    secretary: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
     // candidate
-    candidate: DataTypes.BOOLEAN,
+    candidate: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
     position: DataTypes.STRING,
     description: DataTypes.TEXT,
     observations: DataTypes.TEXT,
-    type: DataTypes.ENUM("headline", "alternate"),
+    type: DataTypes.STRING,
 }, {
     sequelize,
 });

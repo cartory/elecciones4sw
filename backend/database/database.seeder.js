@@ -1,19 +1,20 @@
 const { PartySeeder } = require("./seeders/party.seeder");
+const { LocationSeeder } = require("./seeders/location.seeder");
+
 const sequelize = require("../src/database/sequelize");
+const { PersonSeeder } = require("./seeders/person.seeder");
 
 function authDB() {
     sequelize
         .authenticate()
-        .then(() => {
-            console.log("AUTH TO DB!!");
-        })
-        .catch(e => {
-            console.error(e);
-        });
+        .then().catch();
 }
-function seedDB() {
+async function seedDB() {
     authDB();
-    PartySeeder.seed();
+    await PartySeeder.seed();
+    await LocationSeeder.seed();
+    await PersonSeeder.seed_ADN_politics();
 }
 
 seedDB();
+console.log(`\x1b[32mDB DATABASE SEEDED!!\x1b[0m`);
