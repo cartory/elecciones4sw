@@ -20,16 +20,24 @@ nav {
 }
 
 li {
-    margin-left: 50, 20;
+  margin-left: 50, 20;
 }
 
 a {
-    color: white;
-    transform: scale(1.08);
+  color: white;
+  transform: scale(1.08);
+  /* transition: linear;
+  transition: all .5s ease-in-out;  */
 }
 
 a:hover {
+  display: inline-block;
   color: #ff8ebf;
   transform: scale(1.1);
   transition: all 0.2s ease-in;
+}
+
+.sticky {
+  position: fixed;
+  top: 0%;
 }

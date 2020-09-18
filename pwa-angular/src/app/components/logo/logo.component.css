@@ -1,4 +1,9 @@
-/* 
-#logo {
-    background-color: cadetblue;
-} */
+
+
+.logo-section {
+    margin-top: 55px;
+}
+canvas {
+    /* /* top: auto; */
+    position: sticky;
+}
