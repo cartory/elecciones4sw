@@ -13,7 +13,7 @@ nav {
   /* height: none; */
   color: white;
   transition: 0.5;
-  text-align: justify;
+  /* text-align: justify; */
   text-transform: uppercase;
   background-color: #51575e;
   border-bottom: 3px solid #04c2c9;
@@ -39,5 +39,5 @@ a:hover {
 
 .sticky {
   position: fixed;
-  top: 0%;
+  top: 0;
 }

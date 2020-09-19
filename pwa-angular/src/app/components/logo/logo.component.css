@@ -1,9 +1,18 @@
-
-
 .logo-section {
-    margin-top: 55px;
+  margin-top: 55px;
 }
-canvas {
-    /* /* top: auto; */
-    position: sticky;
+
+.center {
+  padding-top: 10%;
+  padding-left: 10%;
+}
+
+h1 {
+    transition: ease-in-out;
+}
+
+#canvas {
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
 }
