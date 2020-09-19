@@ -1,4 +1,4 @@
-const { Party } = require("../database/associations");
+const { Party, Person } = require("../database/associations");
 
 class PartyController {
     static all(req, res) {
@@ -62,6 +62,32 @@ class PartyController {
             .catch(e => {
                 res.json(e);
             });
+    }
+
+    static candidates(req, res) {
+        const { acro } = req.params;
+        console.log(acro);
+        Party
+            .findAll({
+                where: { acronym: acro },
+                include: [
+                    {
+                        model: Person,
+                        attributes: [
+                            "location_id","type", "document", "lastname1", "lastname2", "names", "birthdate", "gender"
+                        ],
+                        order: [
+                            ["location_id", "DESC"],
+                            ["position", "DESC"],   
+                            ["lastname1", "DESC"],
+                            ["lastname2", "DESC"],
+                            ["type", "DESC"],
+                        ]
+                    }
+                ]
+            })
+            .then(data => res.json(data))
+            .catch(e => res.json(e));
     }
 }
 

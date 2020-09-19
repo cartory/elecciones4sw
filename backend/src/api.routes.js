@@ -5,11 +5,13 @@ const { PartyController } = require("./controllers/party.controller");
 const { TableController } = require("./controllers/table.controller");
 const { LocationController } = require("./controllers/location.controller");
 const { PrecinctController } = require("./controllers/precinct.controller");
+const { PersonController } = require("./controllers/person.controller");
 // ROUTES
 router
-    // PARTIDOS
+    // PARTIES
     .get("/parties", PartyController.all)
     .post("/parties", PartyController.store)
+    .get("/parties/candidates/:acro", PartyController.candidates)
     .get("/parties/:id", PartyController.find)
     .put("/parties/:id", PartyController.update)
     .delete("/parties/:id", PartyController.destroy)
@@ -30,5 +32,8 @@ router
     .post("/tables", TableController.store)
     .get("/tables/:id", TableController.find)
     .put("/tables/:id", TableController.update)
-    .delete("/tables/:id", TableController.destroy);
+    .delete("/tables/:id", TableController.destroy)
+    //  PERSONS
+    .get("/voters", PersonController.all);
+
 module.exports = router;
