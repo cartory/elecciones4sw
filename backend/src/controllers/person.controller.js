@@ -12,7 +12,9 @@ class PersonController {
                     ["lastname2", "ASC"]
                 ]
             })
-            .then(data => res.json(data))
+            .then(data => {
+                res.json(data)
+            })
             .catch(e => res.json(e));
     }
 }

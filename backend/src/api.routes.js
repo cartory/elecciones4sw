@@ -6,6 +6,7 @@ const { TableController } = require("./controllers/table.controller");
 const { LocationController } = require("./controllers/location.controller");
 const { PrecinctController } = require("./controllers/precinct.controller");
 const { PersonController } = require("./controllers/person.controller");
+const { ExcelGenerator } = require("./controllers/excel.generator");
 // ROUTES
 router
     // PARTIES
@@ -34,6 +35,8 @@ router
     .put("/tables/:id", TableController.update)
     .delete("/tables/:id", TableController.destroy)
     //  PERSONS
-    .get("/voters", PersonController.all);
+    .get("/persons", PersonController.all)
+    //  EXCEL
+    .get("/voters", ExcelGenerator.voters_xlsx);
 
 module.exports = router;
