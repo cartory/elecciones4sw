@@ -1,6 +1,5 @@
 const { Location } = require("../../src/database/associations");
 
-
 async function create_location_and_getID(
     { type, name, district = null, location_id = null }
 ) {
@@ -33,11 +32,12 @@ class LocationSeeder {
             "Santa Cruz",
             "Tarija"
         ];
-        for (let i = 0; i < deps.length; i++) {
+
+        deps.forEach(async (dep) => {
             await create_location_and_getID({
-                type: "departamento", name: deps[i], location_id
+                type: "departamento", name: dep, location_id
             });
-        }
+        });
         // provincias
     }
 }

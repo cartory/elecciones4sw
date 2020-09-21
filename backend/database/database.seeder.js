@@ -1,6 +1,6 @@
 const { PartySeeder } = require("./seeders/party.seeder");
 const { LocationSeeder } = require("./seeders/location.seeder");
-
+const { BeniSeeder } = require("./seeders/location.deps.seeder");
 const sequelize = require("../src/database/sequelize");
 const { PersonSeeder } = require("./seeders/person.seeder");
 
@@ -11,9 +11,10 @@ function authDB() {
 }
 async function seedDB() {
     authDB();
-    await PartySeeder.seed();
-    await LocationSeeder.seed();
-    await PersonSeeder.seed_ADN_politics();
+    // await PartySeeder.seed();
+    // await LocationSeeder.seed();
+    // await PersonSeeder.seed_ADN_politics();
+    await BeniSeeder();
 }
 
 seedDB();
