@@ -1,44 +1,72 @@
-const { Location } = require("../../src/database/associations");
+const faker = require("faker");
 
-async function create_location_and_getID(
-    { type, name, district = null, location_id = null }
-) {
-    try {
-        const loc = await Location.create({
-            type, name, district, location_id
+const { bolivia, LocType } = require("./location.const");
+const { Location, Precinct } = require("../../src/database/associations");
+
+const seed_precincts = async ({ number_to_create = 10, location_id = null }) => {
+    while (number_to_create-- > 0) {
+        await Precinct.create({
+            name: faker.address.streetAddress(true),
+            location_id
         }, {
-            fields: ["type", "name", "district", "location_id"]
+            fields: ["name", "location_id"]
         });
-        return loc.dataValues.id;
-    } catch (e) {
-        // console.error(e);
-        return -1;
+    }
+}
+
+const seed_locations = async (
+    { obj, type, district = null, location_id = null }
+) => {
+    const _location = await Location.create({
+        type,
+        name: (Array.isArray(obj)) ? obj[0] : obj,
+        district, location_id
+    }, {
+        fields: [
+            "type", "name", "district", "location_id"
+        ]
+    });
+
+    switch (type) {
+        case LocType.COUNTRY:
+            type = LocType.DEPARTMENT;
+            break;
+        case LocType.DEPARTMENT:
+            type = LocType.PROVINCE;
+            break;
+        case LocType.PROVINCE:
+            type = LocType.MUNICIPALITY;
+            break;
+        case LocType.MUNICIPALITY:
+            type = LocType.DISTRICT;
+            break;
+        case LocType.DISTRICT: break;
+        default: return;
+    }
+
+
+    if (Array.isArray(obj)) {
+        obj[1].forEach(async (child) => {
+            await seed_locations({
+                obj: child,
+                type,
+                location_id: _location.dataValues.id
+            });
+        });
+    } else {
+        await seed_precincts({ 
+            number_to_create: 5,
+            location_id: _location.dataValues.id 
+        });
     }
 }
 
 class LocationSeeder {
     static async seed() {
-        let location_id = await create_location_and_getID({
-            type: "pais", name: "Bolivia"
+        await seed_locations({
+            obj: bolivia,
+            type: LocType.COUNTRY,
         });
-        const deps = [
-            "Beni",
-            "Chuquisaca",
-            "Cochabamba",
-            "La Paz",
-            "Oruro",
-            "Pando",
-            "Potosi",
-            "Santa Cruz",
-            "Tarija"
-        ];
-
-        deps.forEach(async (dep) => {
-            await create_location_and_getID({
-                type: "departamento", name: dep, location_id
-            });
-        });
-        // provincias
     }
 }
 

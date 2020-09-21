@@ -189,18 +189,29 @@ const tarija = [
 ];
 
 const bolivia = [
-    ["Beni", beni],
-    ["Chuquisaca", chuquisaca],
-    ["Cochabamba", cochabamba],
-    ["La Paz", lapaz],
-    ["Oruro", oruro],
-    ["Pando", pando],
-    ["Potosi", potosi],
-    ["Santa Cruz", santacruz],
-    ["Tarija", tarija]
-]
+    "Bolivia",
+    [
+        ["Beni", beni],
+        ["Chuquisaca", chuquisaca],
+        ["Cochabamba", cochabamba],
+        ["La Paz", lapaz],
+        ["Oruro", oruro],
+        ["Pando", pando],
+        ["Potosi", potosi],
+        ["Santa Cruz", santacruz],
+        ["Tarija", tarija]
+    ]
+];
+
+const LocType = {
+    COUNTRY: "país",
+    DEPARTMENT: "departamento",
+    PROVINCE: "provincia",
+    MUNICIPALITY: "municipio",
+    DISTRICT: "distrito"
+};
 
 module.exports = {
     bolivia,
-    beni
+    LocType
 };

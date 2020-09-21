@@ -1,6 +1,5 @@
 const { Location, Precinct } = require("../../src/database/associations");
-const { beni } = require("./deps.const");
-const precinct = require("../../src/models/precinct");
+const { beni } = require("./location.const");
 
 const getID_from_name = async (name) => {
     try {
