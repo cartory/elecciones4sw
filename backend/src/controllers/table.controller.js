@@ -4,25 +4,15 @@ class TableController {
     static all(req, res) {
         Table
             .findAll()
-            .then(data => {
-                res.json(data);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static find(req, res) {
         Table
-            .findOne({
-                where: { id: req.params.id }
-            })
-            .then(data => {
-                res.json(data);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .findOne({ where: { id: req.params.id } })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static store(req, res) {
@@ -33,14 +23,10 @@ class TableController {
             .create({
                 code, number, open, close, precinct_id
             }, {
-                fields: [
-                    "code", "number", "open", "close", "precinct_id" 
-                ]
-            }).then(party => {
-                res.json(party);
-            }).catch(e => {
-                res.json(e);
-            });
+                fields: ["code", "number", "open", "close", "precinct_id"]
+            })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static update(req, res) {
@@ -51,23 +37,15 @@ class TableController {
             .update({
                 code, number, open, close, precinct_id
             }, { where: { id: req.params.id } })
-            .then(val => {
-                res.json(val);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static destroy(req, res) {
         Table
             .destroy({ where: { id: req.params.id } })
-            .then(number => {
-                res.json(number);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 }
 

@@ -35,14 +35,11 @@ class ExcelGenerator {
                 "attachment; filename=votantes.xlsx"
             );
 
-            return workbook.xlsx.write(res).then(() => {
-                res.status(200).end();
-            }).catch(e => {
-                res.json(e);
-            });
-        }).catch(e => {
-            res.json(e);
-        });
+            return workbook.xlsx
+                .write(res)
+                .then(() => res.status(200).end())
+                .catch(e => res.json(e));
+        }).catch(e => res.json(e));
     }
 }
 

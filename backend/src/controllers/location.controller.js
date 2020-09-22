@@ -4,22 +4,15 @@ class LocationController {
     static all(req, res) {
         Location
             .findAll()
-            .then(locs => {
-                res.json(locs);
-            }).catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static find(req, res) {
         Location
-            .findOne({
-                where: { id: req.params.id }
-            }).then(loc => {
-                res.json(loc);
-            }).catch(e => {
-                res.json(e);
-            });
+            .findOne({ where: { id: req.params.id } })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static store(req, res) {
@@ -34,11 +27,9 @@ class LocationController {
                 fields: [
                     "type", "name", "district", "location_id",
                 ]
-            }).then(loc => {
-                res.json(loc);
-            }).catch(e => {
-                res.json(e);
-            });
+            })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static update(req, res) {
@@ -49,21 +40,15 @@ class LocationController {
             .update({
                 type, name, district, location_id
             }, { where: { id: req.params.id } })
-            .then(val => {
-                res.json(val);
-            }).catch(e => {
-                res.json(e);
-            });
-    }
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
+    } nbh
 
     static destroy(req, res) {
         Location
             .destroy({ where: { id: req.params.id } })
-            .then(number => {
-                res.json(number);
-            }).catch(e => {
-                res.json(e);
-            });
+            .then(number => res.json(number))
+            .catch(e => res.json(e));
     }
 }
 

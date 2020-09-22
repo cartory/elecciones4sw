@@ -12,10 +12,8 @@ class PersonController {
                     ["lastname2", "ASC"]
                 ]
             })
-            .then(data => {
-                res.json(data)
-            })
-            .catch(e => res.json(e));
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 }
 

@@ -38,22 +38,15 @@ class App {
     sync() {
         sequelize
             .sync()
-            .then(val => {
-                console.log(`\x1b[32mDB SYNC Successfully!!\x1b[0m`);
-            }).catch(e => {
-                console.error(e);
-            });
+            .then(val => console.log(`\x1b[32mDB SYNC Successfully!!\x1b[0m`))
+            .catch(e => console.error(e));
     }
 
     connectDB() {
         sequelize
             .authenticate()
-            .then(() => {
-                console.log(`\x1b[32mDB Connected Successfully!!\x1b[0m`);
-            })
-            .catch((e) => {
-                console.error(e);
-            });
+            .then(() => console.log(`\x1b[32mDB Connected Successfully!!\x1b[0m`))
+            .catch((e) => console.error(e));
     }
 }
 

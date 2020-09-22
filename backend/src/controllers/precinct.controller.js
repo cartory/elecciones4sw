@@ -4,22 +4,15 @@ class PrecinctController {
     static all(req, res) {
         Precinct
             .findAll()
-            .then(data => {
-                res.json(data);
-            }).catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static find(req, res) {
         Precinct
-            .findOne({
-                where: { id: req.params.id }
-            }).then(data => {
-                res.json(data);
-            }).catch(e => {
-                res.json(e);
-            });
+            .findOne({ where: { id: req.params.id } })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static store(req, res) {
@@ -30,11 +23,9 @@ class PrecinctController {
                 name, location_id
             }, {
                 fields: ["name", "location_id"]
-            }).then(data => {
-                res.json(data);
-            }).catch(e => {
-                res.json(e);
-            });
+            })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static update(req, res) {
@@ -43,21 +34,15 @@ class PrecinctController {
             .update({
                 name, location_id
             }, { where: { id: req.params.id } })
-            .then(val => {
-                res.json(val);
-            }).catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static destroy(req, res) {
         Precinct
             .destroy({ where: { id: req.params.id } })
-            .then(number => {
-                res.json(number);
-            }).catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 }
 

@@ -4,25 +4,15 @@ class PartyController {
     static all(req, res) {
         Party
             .findAll()
-            .then(parties => {
-                res.json(parties);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static find(req, res) {
         Party
-            .findOne({
-                where: { id: req.params.id }
-            })
-            .then(party => {
-                res.json(party);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .findOne({ where: { id: req.params.id } })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static store(req, res) {
@@ -32,11 +22,9 @@ class PartyController {
                 name, icon, acronym
             }, {
                 fields: ["name", "icon", "acronym"]
-            }).then(party => {
-                res.json(party);
-            }).catch(e => {
-                res.json(e);
-            });
+            })
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static update(req, res) {
@@ -45,23 +33,15 @@ class PartyController {
             .update({
                 name, icon, acronym
             }, { where: { id: req.params.id } })
-            .then(val => {
-                res.json(val);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static destroy(req, res) {
         Party
             .destroy({ where: { id: req.params.id } })
-            .then(number => {
-                res.json(number);
-            })
-            .catch(e => {
-                res.json(e);
-            });
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
     }
 
     static candidates(req, res) {
@@ -74,11 +54,11 @@ class PartyController {
                     {
                         model: Person,
                         attributes: [
-                            "location_id","type", "document", "lastname1", "lastname2", "names", "birthdate", "gender"
+                            "location_id", "type", "document", "lastname1", "lastname2", "names", "birthdate", "gender"
                         ],
                         order: [
                             ["location_id", "DESC"],
-                            ["position", "DESC"],   
+                            ["position", "DESC"],
                             ["lastname1", "DESC"],
                             ["lastname2", "DESC"],
                             ["type", "DESC"],
@@ -87,7 +67,7 @@ class PartyController {
                 ]
             })
             .then(data => res.json(data))
-            .catch(e => res.json(e));
+            .catch(err => res.json(err));
     }
 }
 
