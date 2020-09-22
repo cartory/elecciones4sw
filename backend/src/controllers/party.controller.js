@@ -50,21 +50,19 @@ class PartyController {
         Party
             .findAll({
                 where: { acronym: acro },
-                include: [
-                    {
-                        model: Person,
-                        attributes: [
-                            "location_id", "type", "document", "lastname1", "lastname2", "names", "birthdate", "gender"
-                        ],
-                        order: [
-                            ["location_id", "DESC"],
-                            ["position", "DESC"],
-                            ["lastname1", "DESC"],
-                            ["lastname2", "DESC"],
-                            ["type", "DESC"],
-                        ]
-                    }
-                ]
+                include: [{
+                    model: Person,
+                    attributes: [
+                        "location_id", "type", "document", "lastname1", "lastname2", "names", "birthdate", "gender"
+                    ],
+                    order: [
+                        ["location_id", "DESC"],
+                        ["position", "DESC"],
+                        ["lastname1", "DESC"],
+                        ["lastname2", "DESC"],
+                        ["type", "DESC"],
+                    ]
+                }]
             })
             .then(data => res.json(data))
             .catch(err => res.json(err));
