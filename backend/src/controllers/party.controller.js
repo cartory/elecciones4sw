@@ -46,7 +46,6 @@ class PartyController {
 
     static candidates(req, res) {
         const { acro } = req.params;
-        console.log(acro);
         Party
             .findAll({
                 where: { acronym: acro },
