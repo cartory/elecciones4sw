@@ -36,6 +36,7 @@ router
     .delete("/tables/:id", TableController.destroy)
     //  PERSONS
     .get("/persons", PersonController.all)
+    .get("/persons/count", PersonController.count)
     //  EXCEL
     .get("/voters", ExcelGenerator.voters_xlsx);
 

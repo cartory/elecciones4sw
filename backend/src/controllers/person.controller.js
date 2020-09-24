@@ -15,6 +15,13 @@ class PersonController {
             .then(data => res.json(data))
             .catch(err => res.json(err));
     }
+
+    static count(req, res) {
+        Person
+            .count()
+            .then(data => res.json(data))
+            .catch(err => res.json(err));
+    }
 }
 
 module.exports = { PersonController };
