@@ -2,5 +2,6 @@ export interface Party {
     id: number,
     name: string,
     icon: string,
-    acronym: string
+    acronym: string,
+    pdf: string,
 }
