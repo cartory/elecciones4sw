@@ -16,22 +16,22 @@ class PartyController {
     }
 
     static store(req, res) {
-        const { name, icon, acronym } = req.body;
+        const { name, icon, acronym, pdf } = req.body;
         Party
             .create({
                 name, icon, acronym
             }, {
-                fields: ["name", "icon", "acronym"]
+                fields: ["name", "icon", "acronym", "pdf"]
             })
             .then(data => res.json(data))
             .catch(err => res.json(err));
     }
 
     static update(req, res) {
-        const { name, icon, acronym } = req.body;
+        const { name, icon, acronym, pdf } = req.body;
         Party
             .update({
-                name, icon, acronym
+                name, icon, acronym, pdf
             }, { where: { id: req.params.id } })
             .then(data => res.json(data))
             .catch(err => res.json(err));
@@ -66,6 +66,7 @@ class PartyController {
             .then(data => res.json(data))
             .catch(err => res.json(err));
     }
+    
 }
 
 module.exports = { PartyController };

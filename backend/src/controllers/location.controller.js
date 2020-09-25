@@ -42,7 +42,7 @@ class LocationController {
             }, { where: { id: req.params.id } })
             .then(data => res.json(data))
             .catch(err => res.json(err));
-    } nbh
+    }
 
     static destroy(req, res) {
         Location

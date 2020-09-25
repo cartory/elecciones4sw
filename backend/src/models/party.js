@@ -12,7 +12,8 @@ Party.init({
     },
     name: DataTypes.STRING,
     icon: DataTypes.TEXT,
-    acronym: DataTypes.STRING
+    acronym: DataTypes.STRING,
+    pdf: DataTypes.TEXT
 }, {
     sequelize,
 });

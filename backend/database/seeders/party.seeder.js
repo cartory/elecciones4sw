@@ -36,13 +36,25 @@ class PartySeeder {
             "PAN-BOL"
         ];
 
+        const pdfs = [
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/ADN-HABILITADOS-13-09-EG-2020.pdf",
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/CREEMOS-HABILITADOS-PARIDAD_13-09-EG-2020.pdf",
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/CC-HABILITADOS-13-09-EG-2020.pdf",
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/FPV-HABILITADOS-13-09-EG-2020.pdf",
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/JUNTOS-HABILITADOS-13-09-EG-2020.pdf",
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/LIBRE-21-HABILITADOS-13-09-EG-2020.pdf",
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/MAS-IPSP-HABILITADOS-13-09-EG-2020.pdf",
+            "https://www.oep.org.bo/wp-content/uploads/2020/09/PAN-BOL-HABILITADOS-13-09-EG-2020.pdf",
+        ];
+
         for (let i = 0; i < names.length; i++) {
             await Party.create({
                 name: names[i],
                 icon: icons[i],
                 acronym: acros[i],
+                pdf: pdfs[i],
             }, {
-                fields: ["name", "icon", "acronym"],
+                fields: ["name", "icon", "acronym", "pdf"],
                 isNewRecord: true,
             });
         }

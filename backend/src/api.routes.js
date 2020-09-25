@@ -12,10 +12,10 @@ router
     // PARTIES
     .get("/parties", PartyController.all)
     .post("/parties", PartyController.store)
-    .get("/parties/candidates/:acro", PartyController.candidates)
     .get("/parties/:id", PartyController.find)
     .put("/parties/:id", PartyController.update)
     .delete("/parties/:id", PartyController.destroy)
+    .get("/parties/candidates/:acro", PartyController.candidates)
     // LOCATIONS
     .get("/locations", LocationController.all)
     .post("/locations", LocationController.store)
@@ -37,7 +37,7 @@ router
     //  PERSONS
     .get("/persons", PersonController.all)
     .get("/persons/count", PersonController.count)
-    //  EXCEL
-    .get("/voters", ExcelGenerator.voters_xlsx);
-
+    //  EXCEL OR PDF
+    .get("/voters", ExcelGenerator.voters_xlsx)
+    
 module.exports = router;
