@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="container col-12 col-sm-6">
-                <img id="gif" src="assets/bolivia.gif" alt="gif" width="85%">
+                <img id="gif" src="assets/bolivia.gif" alt="gif">
             </div>
             <div class="container col-12 col-sm-6 center">
                 <h1 style="font-size: 330%;">Registro de Todos los votantes de
@@ -10,11 +10,10 @@
                     <strong style="color: yellow;">LI</strong>
                     <strong style="color: green;">VIA</strong>!!
                 </h1>
-                <h2>Total {{ voterService.count }} votantes</h2>
-                <a href="http://localhost:3000/api/voters">
-                    <span class="fa fa-cloud-download"> Lista de votantes</span>
+                <h2>Total <strong>{{ voterService.count }}</strong> votantes</h2>
+                <a href="{{ downloadService.voters_XLS_url() }}" class="btn btn-outline-info download"><span
+                    class="fa fa-cloud-download"> Obtener Lista de votantes</span>
                 </a>
-                <!-- <button><span class="fa fa-cloud-download"></span>Obtener Lista de votantes</button> -->
             </div>
         </div>
     </div>

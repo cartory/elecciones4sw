@@ -1,11 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @media screen and (max-width: 320px) {
   body or yourdiv element {
-    font: <size>px/em/rm;
+    font: px/em/rm;
   }
 }
+
 @media screen and (max-width: 1204px) {
   body or yourdiv element {
-    font: <size>px/em/rm;
+    font: px/em/rm;
   }
+}
+
+.download {
+  margin: 3% 3%;
+}
+
+strong {
+  color: blueviolet;
+}
+
+.center {
+  padding-top: 10%;
+  padding-left: 10%;
 }

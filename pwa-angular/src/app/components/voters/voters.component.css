@@ -15,6 +15,10 @@
   padding-left: 10%;
 }
 
+img {
+  width: 88%;
+}
+
 h1 {
     text-align: left;
     display: inline-flexbox;

@@ -26,8 +26,6 @@ li {
 a {
   color: white;
   transform: scale(1.08);
-  /* transition: linear;
-  transition: all .5s ease-in-out;  */
 }
 
 a:hover {

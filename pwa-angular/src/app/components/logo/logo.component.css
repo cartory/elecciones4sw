@@ -2,17 +2,14 @@
   margin-top: 55px;
 }
 
-.center {
-  padding-top: 10%;
-  padding-left: 10%;
-}
-
 h1 {
     transition: ease-in-out;
+    font-size: 550%;
 }
 
 #canvas {
   text-align: center;
   align-items: center;
   vertical-align: middle;
+  padding-left: 15%;
 }
