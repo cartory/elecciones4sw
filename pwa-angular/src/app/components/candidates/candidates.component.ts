@@ -16,7 +16,7 @@ export class CandidatesComponent implements OnInit {
   constructor(
     public partyService: PartyService,
     public downloadService: DownloadService,
-    private _config: NgbCarouselConfig
+    _config: NgbCarouselConfig
   ) { 
     _config.interval = 1100;
     _config.wrap = true;
@@ -27,7 +27,7 @@ export class CandidatesComponent implements OnInit {
 
   ngOnInit() {
     this.partyService.getParties().subscribe(
-      res => console.log(this.partyService.parties = res),
+      res => this.partyService.parties = res,
       err => console.error(err)
     );
   }
