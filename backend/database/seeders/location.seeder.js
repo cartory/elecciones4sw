@@ -14,9 +14,7 @@ const seed_precincts = async ({ number_to_create = 10, location_id = null }) => 
     }
 }
 
-const seed_locations = async (
-    { obj, type, district = null, location_id = null }
-) => {
+const seed_locations = async ({ obj, type, district = null, location_id = null }) => {
     const _location = await Location.create({
         type,
         name: (Array.isArray(obj)) ? obj[0] : obj,
@@ -44,7 +42,6 @@ const seed_locations = async (
         default: return;
     }
 
-
     if (Array.isArray(obj)) {
         obj[1].forEach(async (child) => {
             await seed_locations({
@@ -54,10 +51,7 @@ const seed_locations = async (
             });
         });
     } else {
-        await seed_precincts({ 
-            number_to_create: 5,
-            location_id: _location.dataValues.id 
-        });
+        await seed_precincts({ number_to_create: 5, location_id: _location.dataValues.id });
     }
 }
 
