@@ -4,7 +4,6 @@ const router = Router();
 const { PartyController } = require("./controllers/party.controller");
 const { TableController } = require("./controllers/table.controller");
 const { LocationController } = require("./controllers/location.controller");
-const { PrecinctController } = require("./controllers/precinct.controller");
 const { PersonController } = require("./controllers/person.controller");
 const { ExcelGenerator } = require("./controllers/excel.generator");
 // ROUTES
@@ -19,15 +18,9 @@ router
     // LOCATIONS
     .get("/locations", LocationController.all)
     .post("/locations", LocationController.store)
-    .get("/locations/:id", LocationController.find)
+    .get("/locations/:id", LocationController.get)
     .put("/locations/:id", LocationController.update)
     .delete("/locations/:id", LocationController.destroy)
-    // PRECICNTS
-    .get("/precincts", PrecinctController.all)
-    .post("/precincts", PrecinctController.store)
-    .get("/precincts/:id", PrecinctController.find)
-    .put("/precincts/:id", PrecinctController.update)
-    .delete("/precincts/:id", PrecinctController.destroy)
     // TABLES
     .get("/tables", TableController.all)
     .post("/tables", TableController.store)

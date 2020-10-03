@@ -15,6 +15,16 @@ class LocationController {
             .catch(err => res.json(err));
     }
 
+    static get(req, res) {
+        Location
+            .findOne({
+                where: { id: req.params.id },
+                include: [{ model: Location }]
+            })
+            .then(data => { res.json(data); })
+            .catch(err => res.json(err));
+    }
+
     static store(req, res) {
         const {
             type, name, district = null, location_id = null

@@ -1,15 +1,18 @@
 const faker = require("faker");
 
 const { bolivia, LocType } = require("./location.const");
-const { Location, Precinct } = require("../../src/database/associations");
+const { Location } = require("../../src/database/associations");
 
 const seed_precincts = async ({ number_to_create = 10, location_id = null }) => {
     while (number_to_create-- > 0) {
-        await Precinct.create({
+        await Location.create({
+            type: LocType.PRECINCT,
             name: faker.address.streetAddress(true),
-            location_id
+            district: null, location_id
         }, {
-            fields: ["name", "location_id"]
+            fields: [
+                "type", "name", "district", "location_id"
+            ]
         });
     }
 }
@@ -38,7 +41,9 @@ const seed_locations = async ({ obj, type, district = null, location_id = null }
         case LocType.MUNICIPALITY:
             type = LocType.DISTRICT;
             break;
-        case LocType.DISTRICT: break;
+        case LocType.DISTRICT:
+            type = LocType.PRECINCT;
+            break;
         default: return;
     }
 

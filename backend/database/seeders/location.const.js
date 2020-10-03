@@ -208,7 +208,8 @@ const LocType = {
     DEPARTMENT: "departamento",
     PROVINCE: "provincia",
     MUNICIPALITY: "municipio",
-    DISTRICT: "distrito"
+    DISTRICT: "distrito",
+    PRECINCT: "recinto"
 };
 
 module.exports = {
