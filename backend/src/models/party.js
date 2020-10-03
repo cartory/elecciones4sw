@@ -16,6 +16,7 @@ Party.init({
     pdf: DataTypes.TEXT
 }, {
     sequelize,
+    timestamps: false
 });
 
 module.exports = { Party };

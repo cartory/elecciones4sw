@@ -16,6 +16,7 @@ Table.init({
     close: DataTypes.DATE,
 }, {
     sequelize,
+    timestamps: false
 });
 
 module.exports = { Table };

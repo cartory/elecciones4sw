@@ -9,6 +9,7 @@ Vote.init({
     position: DataTypes.STRING,
 }, {
     sequelize,
+    timestamps: false
 });
 
 module.exports = { Vote };

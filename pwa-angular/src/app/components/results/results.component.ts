@@ -14,11 +14,7 @@ export class ResultsComponent implements OnInit {
     private partyService: PartyService
   ) { }
 
-  // title = 'angular8chartjs';
-  // canvas: any;
-  // ctx: any;
-
-  countDownDate = new Date("october 10, 2020 00:00:00").getTime();
+  countDownDate = new Date("october 9, 2020 00:00:00").getTime();
   demo: string;
 
   ngOnInit() {
@@ -40,9 +36,6 @@ export class ResultsComponent implements OnInit {
     var secs = Math.floor(dif % (60000) / (1000));
     this.demo = `${days} d ${hours} h ${mins} m ${secs} s`;
   })
-
-  // private load_countdown_date() {
-  // }
 
   private loadChart() {
     // this.canvas = document.getElementById('myChart');

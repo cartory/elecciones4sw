@@ -1,11 +1,14 @@
 const { Router } = require("express");
 const router = Router();
 // CONTROLLERS
-const { PartyController } = require("./controllers/party.controller");
-const { TableController } = require("./controllers/table.controller");
-const { LocationController } = require("./controllers/location.controller");
-const { PersonController } = require("./controllers/person.controller");
 const { ExcelGenerator } = require("./controllers/excel.generator");
+const { TableController } = require("./controllers/table.controller");
+const { PartyController } = require("./controllers/party.controller");
+const { PersonController } = require("./controllers/person.controller");
+const { LocationController } = require("./controllers/location.controller");
+// AUTH
+const { verifyLogin, verifyToken } = require("./database/auth");
+
 // ROUTES
 router
     // PARTIES
@@ -32,5 +35,9 @@ router
     .get("/persons/count", PersonController.count)
     //  EXCEL OR PDF
     .get("/voters", ExcelGenerator.voters_xlsx)
-    
+    // LOGIN
+    .post("/signup", PersonController.register)
+    .get("/me", verifyToken, PersonController.profile)
+    .post("/signin", verifyLogin, PersonController.login);
+
 module.exports = router;

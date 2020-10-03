@@ -3,7 +3,7 @@ function scrollTo(to, duration) {
     var diff = to - document.body.scrollTop;
     var scrollStep = Math.PI / (duration / 10);
     var count = 0, currPos;
-    start = window.pageYOffset;
+    start = window.pageYOffsetc;
     scrollInterval = setInterval(function () {
         if (document.body.scrollTop != to) {
             count = count + 1;

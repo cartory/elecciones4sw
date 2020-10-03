@@ -15,6 +15,7 @@ Location.init({
     district: DataTypes.INTEGER,
 }, {
     sequelize,
+    timestamps: false
 });
 
 module.exports = { Location };
