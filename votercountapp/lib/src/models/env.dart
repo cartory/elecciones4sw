@@ -1,0 +1,1 @@
+const uri = "https://elecciones4sw.herokuapp.com/api";

@@ -34,32 +34,20 @@ class _ActFormState extends State<ActForm> {
       child: Column(
         children: <Widget>[
           _imageFile(),
-          // _textFormField(
-          //   'Nombre',
-          //   initialValue: _product.name,
-          //   textInputType: TextInputType.text,
-          //   textCapitalization: TextCapitalization.sentences,
-          // ),
-          // _textFormField(
-          //   'Descripción',
-          //   initialValue: _product.description,
-          //   textCapitalization: TextCapitalization.sentences,
-          //   textInputType: TextInputType.multiline,
-          // ),
-          // _textFormField('Precio',
-          //     initialValue: _product.price.toString(),
-          //     textCapitalization: TextCapitalization.none,
-          //     textInputType:
-          //         TextInputType.numberWithOptions(decimal: true, signed: false),
-          //     number: true),
-          // _textFormField(
-          //   'Cantidad',
-          //   initialValue: _product.stock.toString(),
-          //   textCapitalization: TextCapitalization.none,
-          //   textInputType:
-          //       TextInputType.numberWithOptions(decimal: true, signed: false),
-          //   number: true,
-          // ),
+          DropdownButton<String>(
+            value: 'A',
+            hint: Text("Seleccione Localidad"),
+            icon: Icon(Icons.location_on),
+            items: <String>['A', 'B', 'C', 'D'].map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            onChanged: (val) {
+              print(val);
+            },
+          )
         ],
       ),
     );
@@ -70,14 +58,6 @@ class _ActFormState extends State<ActForm> {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.file_upload),
-              SizedBox(width: 5),
-              Text("Recurso?"),
-            ],
-          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -118,63 +98,16 @@ class _ActFormState extends State<ActForm> {
         await Permission.mediaLibrary.request();
         _displayDialog(context);
       },
-      child: image == null
-          ? Image.asset('assets/no-image.png')
-          : Image.file(image, fit: BoxFit.cover, height: 321),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: image == null
+            ? Image.asset('assets/no-image.png',
+                fit: BoxFit.cover, width: double.infinity, height: 321)
+            : Image.file(image,
+                fit: BoxFit.cover, width: double.infinity, height: 321),
+      ),
     );
   }
-
-  // Widget _textFormField(String textField,
-  //     {String initialValue,
-  //     TextInputType textInputType,
-  //     TextCapitalization textCapitalization,
-  //     bool number = false}) {
-  //   return TextFormField(
-  //       initialValue: initialValue,
-  //       keyboardType: textInputType,
-  //       textCapitalization: textCapitalization,
-  //       decoration: InputDecoration(labelText: textField),
-  //       onSaved: (value) => _onSavedFormField(textField, value),
-  //       validator: (value) {
-  //         return number
-  //             ? _isNumber(value) ? null : 'Número Requerido'
-  //             : value == null || value == '' && textField != 'Descripción'
-  //                 ? 'Campo Requerido'
-  //                 : null;
-  //       });
-  // }
-
-  // List<Widget> _actionButtonList() {
-  //   return [
-  //     IconButton(
-  //       icon: Icon(Icons.photo_size_select_actual),
-  //       onPressed: () => _getImageFile(ImageSource.gallery),
-  //     ),
-  //     IconButton(
-  //       icon: Icon(Icons.camera_alt),
-  //       onPressed: () => _getImageFile(ImageSource.camera),
-  //     ),
-  //   ];
-  // }
-
-  // bool _isNumber(String s) => num.tryParse(s) != null;
-
-  // _onSavedFormField(String textField, String value) {
-  //   switch (textField) {
-  //     case 'Nombre':
-  //       _product.name = value;
-  //       break;
-  //     case 'Descripción':
-  //       _product.description = value;
-  //       break;
-  //     case 'Precio':
-  //       _product.price = double.parse(value);
-  //       break;
-  //     default:
-  //       /* stock*/
-  //       _product.stock = double.parse(value);
-  //   }
-  // }
 
   // _submitButtonForm() {
   //   if (!formKey.currentState.validate()) return;
