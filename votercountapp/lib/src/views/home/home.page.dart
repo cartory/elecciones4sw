@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:votercountapp/src/views/form.dart';
+import 'package:votercountapp/src/views/home/form.dart';
 
 class HomePage extends StatefulWidget {
-  static String routeName = "HomePage";
+  static String route = "home";
 
   HomePage({Key key}) : super(key: key);
 

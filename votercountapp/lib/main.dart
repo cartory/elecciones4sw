@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:votercountapp/src/views/home.page.dart';
+import 'package:votercountapp/src/views/auth/login.page.dart';
+import 'package:votercountapp/src/views/auth/register.page.dart';
+import 'package:votercountapp/src/views/home/home.page.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,9 +14,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Elecciones4SW',
       debugShowCheckedModeBanner: false,
-      initialRoute: HomePage.routeName,
+      initialRoute: LoginPage.route,
       routes: {
-        HomePage.routeName : (_) => HomePage()
+        HomePage.route        : (_) => HomePage(),
+        LoginPage.route       : (_) => LoginPage(),
+        RegisterPage.route    : (_) => RegisterPage(),
       },
     );
   }
