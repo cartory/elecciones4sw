@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const { Person } = require("../database/associations");
+const { Party } = require("../models/party");
 
 const generate_token = (id) => {
     return jwt.sign({ id }, process.env.SECRET, { expiresIn: 3600 });
@@ -36,7 +37,8 @@ class PersonController {
                 fields: [
                     "document", "lastname1", "lastname2", "names",
                     "birthdate", "gender", "delegate", "party_id"
-                ]
+                ],
+                include: [{ model: Party }]
             })
             .then(data => {
                 res.json({
@@ -58,7 +60,10 @@ class PersonController {
 
     static profile(req, res) {
         Person
-            .findOne({ where: { id: req.id } })
+            .findOne({
+                where: { id: req.id },
+                include: [{ model: Party }]
+            })
             .then(data => {
                 if (!data)
                     res.json({ auth: false, message: "not Found" });

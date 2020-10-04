@@ -19,7 +19,7 @@ class PartyController {
         const { name, icon, acronym, pdf } = req.body;
         Party
             .create({
-                name, icon, acronym
+                name, icon, acronym, pdf
             }, {
                 fields: ["name", "icon", "acronym", "pdf"]
             })

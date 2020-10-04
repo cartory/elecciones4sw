@@ -156,13 +156,16 @@ class _ActFormState extends State<ActForm> {
         ));
     if (croppedFile != null) {
       setState(() => image = croppedFile);
+      TextRecon.detecFromFile(image);
     }
-    TextRecon.detecFromFile(image);
   }
 
   _getImageFile(ImageSource imageSource) async {
     // ignore: deprecated_member_use
     File picked = await ImagePicker.pickImage(source: imageSource);
     setState(() => image = picked);
+    if (image != null) {
+      TextRecon.detecFromFile(image);
+    }
   }
 }

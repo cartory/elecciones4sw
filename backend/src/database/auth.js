@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const { Person } = require("./associations");
+const { Person, Party } = require("./associations");
 
 const verifyToken = (req, res, next) => {
     const token = req.headers[process.env.AUTH_HEADER];
@@ -17,7 +17,10 @@ const verifyToken = (req, res, next) => {
 const verifyLogin = (req, res, next) => {
     const { document, password } = req.body;
     Person
-        .findOne({ where: { document } })
+        .findOne({
+            where: { document },
+            include: [{ model: Party }]
+        })
         .then(data => {
             if (document != password || !data)
                 res.json({ auth: false });
