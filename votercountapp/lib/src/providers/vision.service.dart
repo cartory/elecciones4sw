@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:votercountapp/src/models/act.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 double _getDx(List<Offset> points, Offset p) {
@@ -25,6 +26,13 @@ bool _inRange(Offset o, Offset p, {int limit = 5}) {
   return o.dx - limit < p.dx && p.dx < o.dx + limit;
 }
 
+Offset middlePoint(List<Offset> p) {
+  return Offset(
+    (p[0].dx + p[1].dx) / 2,
+    (p[0].dy + p[1].dy) / 2,
+  );
+}
+
 class TextRecon {
   static detecFromFile(File img) async {
     final txtrcon = FirebaseVision.instance.textRecognizer();
@@ -32,13 +40,32 @@ class TextRecon {
       FirebaseVisionImage.fromFile(img),
     );
 
-    List<List> votes = List();
+    Offset mp, p;
     double dx, dy;
-    Offset p;
+    List<List> votes = List();
     bool blanco = true, nulo = true;
 
+    Act acta = Act(
+      apertura: DateTime.now().toIso8601String(),
+      cierre: DateTime.now().toIso8601String(),
+    );
+
     visiontxt.blocks.forEach((block) {
-      if (block.text.toUpperCase().contains("C.C")) {
+      if (block.text.toUpperCase().contains("O DE MESA") && mp == null) {
+        mp = middlePoint(block.cornerPoints);
+      } else if (block.text.toUpperCase().contains("MESA:")) {
+        if (mp != null) {
+          if (block.cornerPoints[0].dx < mp.dx) {
+            acta.nro = int.tryParse(_getDigits(block.text));
+          }
+        }
+      } else if (block.text.toUpperCase().contains("CIR.")) {
+        if (mp != null) {
+          if (block.cornerPoints[0].dx < mp.dx) {
+            acta.distrito = int.tryParse(_getDigits(block.text));
+          }
+        }
+      } else if (block.text.toUpperCase().contains("C.C")) {
         if (p == null) {
           p = block.cornerPoints[0];
           votes.add([p, block.text.toUpperCase(), 0, 0]);
@@ -66,6 +93,13 @@ class TextRecon {
         if (p != null) {
           if (_inRange(block.cornerPoints[0], p)) {
             votes.add([block.cornerPoints[0], block.text.toUpperCase(), 0, 0]);
+          }
+        }
+        if (mp != null) {
+          if (block.cornerPoints[0].dx < mp.dx) {
+            if (acta.codigo == null) {
+              acta.codigo = int.tryParse(block.text);
+            }
           }
         }
       }
