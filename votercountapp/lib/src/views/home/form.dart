@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:votercountapp/src/providers/vision.service.dart';
 
 class ActForm extends StatefulWidget {
   @override
@@ -84,6 +86,19 @@ class _ActFormState extends State<ActForm> {
                 ),
                 onTap: () => _getImageFile(ImageSource.gallery),
               ),
+              (image != null)
+                  ? ListTile(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.crop),
+                          SizedBox(width: 10),
+                          Text("Editar")
+                        ],
+                      ),
+                      onTap: () => _cropImage(),
+                    )
+                  : Container(),
             ],
           ),
         );
@@ -109,19 +124,45 @@ class _ActFormState extends State<ActForm> {
     );
   }
 
-  // _submitButtonForm() {
-  //   if (!formKey.currentState.validate()) return;
-  //   formKey.currentState.save();
-  //   if (image == null) return;
-
-  //   // _product.id == null
-  //   //     ? provider.create(_product, image)
-  //   //     : provider.update(_product, _product.id, image);
-  // }
+  Future<Null> _cropImage() async {
+    File croppedFile = await ImageCropper.cropImage(
+        sourcePath: image.path,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'Cropper',
+        ));
+    if (croppedFile != null) {
+      setState(() => image = croppedFile);
+    }
+    TextRecon.detecFromFile(image);
+  }
 
   _getImageFile(ImageSource imageSource) async {
     // ignore: deprecated_member_use
-    image = await ImagePicker.pickImage(source: imageSource);
-    setState(() {});
+    File picked = await ImagePicker.pickImage(source: imageSource);
+    setState(() => image = picked);
   }
 }

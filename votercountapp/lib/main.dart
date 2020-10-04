@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Elecciones4SW',
       debugShowCheckedModeBanner: false,
-      initialRoute: LoginPage.route,
+      initialRoute: HomePage.route,
       routes: {
         HomePage.route        : (_) => HomePage(),
         LoginPage.route       : (_) => LoginPage(),
