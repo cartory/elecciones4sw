@@ -40,8 +40,9 @@ class TextRecon {
       FirebaseVisionImage.fromFile(img),
     );
 
-    Offset mp, p;
-    double dx, dy;
+    List<List> locs = List();
+    Offset mp, p, tp;
+    double dx, dy, px, py;
     List<List> votes = List();
     bool blanco = true, nulo = true;
 
@@ -51,7 +52,31 @@ class TextRecon {
     );
 
     visiontxt.blocks.forEach((block) {
-      if (block.text.toUpperCase().contains("O DE MESA") && mp == null) {
+      if (block.text.toLowerCase().contains("depart") && tp == null) {
+        tp = block.cornerPoints[0];
+        px = block.cornerPoints[1].dx - tp.dx;
+        locs.add([tp, block.text]);
+      } else if (block.text.toLowerCase().contains("provincia:")) {
+        if (tp != null) {
+          py = _getDy(block.cornerPoints, tp);
+          locs.add([tp, block.text.toLowerCase()]);
+        }
+      } else if (block.text.toLowerCase().contains("icipio:")) {
+        if (tp != null) {
+          py = _getDy(block.cornerPoints, tp);
+          locs.add([tp, block.text.toLowerCase()]);
+        }
+      } else if (block.text.toLowerCase().contains("calidad:")) {
+        if (tp != null) {
+          py = _getDy(block.cornerPoints, tp);
+          locs.add([tp, block.text.toLowerCase()]);
+        }
+      } else if (block.text.toLowerCase().contains("recinto:")) {
+        if (tp != null) {
+          py = _getDy(block.cornerPoints, tp);
+          locs.add([tp, block.text.toLowerCase()]);
+        }
+      } else if (block.text.toUpperCase().contains("O DE MESA") && mp == null) {
         mp = middlePoint(block.cornerPoints);
       } else if (block.text.toUpperCase().contains("MESA:")) {
         if (mp != null) {
@@ -111,8 +136,8 @@ class TextRecon {
       if (digits.isNotEmpty) {
         votes.forEach((cols) {
           Offset o = cols[0];
-          if (o.dy < pb.dy && pb.dy < o.dy + dy * .5) {
-            if (o.dx < pb.dx && pb.dx < o.dx + dx) {
+          if (o.dy < pb.dy && pb.dy < o.dy + 5) {
+            if (o.dx < pb.dx && pb.dx < o.dx + px * 1.3) {
               print("C1:${cols[1]}\t$digits");
               cols[2] = int.parse(digits);
             } else {
@@ -122,6 +147,17 @@ class TextRecon {
           }
         });
       }
+      locs.forEach((cols) {
+        Offset o = cols[0];
+        if (block.cornerPoints[0].dx < o.dx + px * 1.3) {
+          if (o.dy - 5 < block.cornerPoints[0].dy) {
+            if (block.cornerPoints[0].dy < o.dy + 5) {
+              // print(block.text);
+              cols[1] = block.text;
+            }
+          }
+        }
+      });
     });
 
     print("DEBUG");
