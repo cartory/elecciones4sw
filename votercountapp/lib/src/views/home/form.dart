@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
+
 import 'package:image_picker/image_picker.dart';
+import 'package:votercountapp/src/models/act.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:votercountapp/src/providers/vision.service.dart';
 
@@ -16,6 +18,7 @@ class _ActFormState extends State<ActForm> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   File image;
+  Map<String, dynamic> data;
 
   @override
   Widget build(BuildContext context) {
@@ -23,34 +26,9 @@ class _ActFormState extends State<ActForm> {
       key: scaffoldKey,
       body: SingleChildScrollView(
         child: Container(
-          child: _form(),
+          child: _getForm(),
           padding: EdgeInsets.all(15),
         ),
-      ),
-    );
-  }
-
-  Widget _form() {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: <Widget>[
-          _imageFile(),
-          DropdownButton<String>(
-            value: 'A',
-            hint: Text("Seleccione Localidad"),
-            icon: Icon(Icons.location_on),
-            items: <String>['A', 'B', 'C', 'D'].map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (val) {
-              print(val);
-            },
-          )
-        ],
       ),
     );
   }
@@ -156,8 +134,33 @@ class _ActFormState extends State<ActForm> {
         ));
     if (croppedFile != null) {
       setState(() => image = croppedFile);
-      TextRecon.detecFromFile(image);
+      data = await TextRecon.detecFromFile(image);
+      print(data);
     }
+  }
+
+  Widget _getForm() {
+    return Form(
+      key: formKey,
+      child: Container(),
+    );
+  }
+
+  List<Widget> _constructData() {
+    List<Widget> tmp = List();
+
+    // Act acta = data["acta"];
+    // List<List> locs = data["locs"];
+    // List<List> votos = data["votos"];
+    return tmp;
+  }
+
+  Widget _getActa(Act acta, ) {
+    return Container(
+      child: Column(
+
+      ),
+    );
   }
 
   _getImageFile(ImageSource imageSource) async {
@@ -165,7 +168,8 @@ class _ActFormState extends State<ActForm> {
     File picked = await ImagePicker.pickImage(source: imageSource);
     setState(() => image = picked);
     if (image != null) {
-      TextRecon.detecFromFile(image);
+      data = await TextRecon.detecFromFile(image);
+      print(data);
     }
   }
 }

@@ -34,15 +34,15 @@ Offset middlePoint(List<Offset> p) {
 }
 
 class TextRecon {
-  static detecFromFile(File img) async {
+  static Future<Map<String, dynamic>> detecFromFile(File img) async {
     final txtrcon = FirebaseVision.instance.textRecognizer();
     final visiontxt = await txtrcon.processImage(
       FirebaseVisionImage.fromFile(img),
     );
 
-    List<List> locs = List();
     Offset mp, p, tp;
     double dx, dy, px, py;
+    List<List> locs = List();
     List<List> votes = List();
     bool blanco = true, nulo = true;
 
@@ -136,8 +136,8 @@ class TextRecon {
       if (digits.isNotEmpty) {
         votes.forEach((cols) {
           Offset o = cols[0];
-          if (o.dy < pb.dy && pb.dy < o.dy + 5) {
-            if (o.dx < pb.dx && pb.dx < o.dx + px * 1.3) {
+          if (o.dy < pb.dy && pb.dy < o.dy + dy / 2) {
+            if (o.dx < pb.dx && pb.dx < o.dx + dx) {
               print("C1:${cols[1]}\t$digits");
               cols[2] = int.parse(digits);
             } else {
@@ -160,7 +160,12 @@ class TextRecon {
       });
     });
 
-    print("DEBUG");
     txtrcon.close();
+
+    return {
+      "acta" : acta,
+      "votos": votes,
+      "locs": locs,      
+    };
   }
 }
