@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'dart:ui';
+import 'dart:io';
 
-import 'package:votercountapp/src/models/act.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 double _getDx(List<Offset> points, Offset p) {
@@ -34,63 +33,19 @@ Offset middlePoint(List<Offset> p) {
 }
 
 class TextRecon {
-  static Future<Map<String, dynamic>> detecFromFile(File img) async {
+  static Future<List<List>> detecFromFile(File img) async {
     final txtrcon = FirebaseVision.instance.textRecognizer();
     final visiontxt = await txtrcon.processImage(
       FirebaseVisionImage.fromFile(img),
     );
 
-    Offset mp, p, tp;
-    double dx, dy, px, py;
-    List<List> locs = List();
+    Offset p;
+    double dx, dy;
     List<List> votes = List();
     bool blanco = true, nulo = true;
 
-    Act acta = Act(
-      apertura: DateTime.now().toIso8601String(),
-      cierre: DateTime.now().toIso8601String(),
-    );
-
     visiontxt.blocks.forEach((block) {
-      if (block.text.toLowerCase().contains("depart") && tp == null) {
-        tp = block.cornerPoints[0];
-        px = block.cornerPoints[1].dx - tp.dx;
-        locs.add([tp, block.text]);
-      } else if (block.text.toLowerCase().contains("provincia:")) {
-        if (tp != null) {
-          py = _getDy(block.cornerPoints, tp);
-          locs.add([tp, block.text.toLowerCase()]);
-        }
-      } else if (block.text.toLowerCase().contains("icipio:")) {
-        if (tp != null) {
-          py = _getDy(block.cornerPoints, tp);
-          locs.add([tp, block.text.toLowerCase()]);
-        }
-      } else if (block.text.toLowerCase().contains("calidad:")) {
-        if (tp != null) {
-          py = _getDy(block.cornerPoints, tp);
-          locs.add([tp, block.text.toLowerCase()]);
-        }
-      } else if (block.text.toLowerCase().contains("recinto:")) {
-        if (tp != null) {
-          py = _getDy(block.cornerPoints, tp);
-          locs.add([tp, block.text.toLowerCase()]);
-        }
-      } else if (block.text.toUpperCase().contains("O DE MESA") && mp == null) {
-        mp = middlePoint(block.cornerPoints);
-      } else if (block.text.toUpperCase().contains("MESA:")) {
-        if (mp != null) {
-          if (block.cornerPoints[0].dx < mp.dx) {
-            acta.nro = int.tryParse(_getDigits(block.text));
-          }
-        }
-      } else if (block.text.toUpperCase().contains("CIR.")) {
-        if (mp != null) {
-          if (block.cornerPoints[0].dx < mp.dx) {
-            acta.distrito = int.tryParse(_getDigits(block.text));
-          }
-        }
-      } else if (block.text.toUpperCase().contains("C.C")) {
+      if (block.text.toUpperCase().contains("C.C")) {
         if (p == null) {
           p = block.cornerPoints[0];
           votes.add([p, block.text.toUpperCase(), 0, 0]);
@@ -120,13 +75,6 @@ class TextRecon {
             votes.add([block.cornerPoints[0], block.text.toUpperCase(), 0, 0]);
           }
         }
-        if (mp != null) {
-          if (block.cornerPoints[0].dx < mp.dx) {
-            if (acta.codigo == null) {
-              acta.codigo = int.tryParse(block.text);
-            }
-          }
-        }
       }
     });
 
@@ -147,25 +95,10 @@ class TextRecon {
           }
         });
       }
-      locs.forEach((cols) {
-        Offset o = cols[0];
-        if (block.cornerPoints[0].dx < o.dx + px * 1.3) {
-          if (o.dy - 5 < block.cornerPoints[0].dy) {
-            if (block.cornerPoints[0].dy < o.dy + 5) {
-              // print(block.text);
-              cols[1] = block.text;
-            }
-          }
-        }
-      });
     });
 
     txtrcon.close();
 
-    return {
-      "acta" : acta,
-      "votos": votes,
-      "locs": locs,      
-    };
+    return votes;
   }
 }

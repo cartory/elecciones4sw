@@ -18,7 +18,8 @@ class _ActFormState extends State<ActForm> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   File image;
-  Map<String, dynamic> data;
+  List<List> data;
+  Act acta = Act();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class _ActFormState extends State<ActForm> {
       key: scaffoldKey,
       body: SingleChildScrollView(
         child: Container(
-          child: _getForm(),
+          child: _form(),
           padding: EdgeInsets.all(15),
         ),
       ),
@@ -48,7 +49,7 @@ class _ActFormState extends State<ActForm> {
                   children: [
                     Icon(Icons.camera_alt),
                     SizedBox(width: 10),
-                    Text("Cámara")
+                    Text("Cámara"),
                   ],
                 ),
                 onTap: () => _getImageFile(ImageSource.camera),
@@ -59,7 +60,7 @@ class _ActFormState extends State<ActForm> {
                   children: [
                     Icon(Icons.photo_library),
                     SizedBox(width: 10),
-                    Text("Galería")
+                    Text("Galería"),
                   ],
                 ),
                 onTap: () => _getImageFile(ImageSource.gallery),
@@ -104,61 +105,210 @@ class _ActFormState extends State<ActForm> {
 
   Future<Null> _cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
-        sourcePath: image.path,
-        aspectRatioPresets: Platform.isAndroid
-            ? [
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio16x9
-              ]
-            : [
-                CropAspectRatioPreset.original,
-                CropAspectRatioPreset.square,
-                CropAspectRatioPreset.ratio3x2,
-                CropAspectRatioPreset.ratio4x3,
-                CropAspectRatioPreset.ratio5x3,
-                CropAspectRatioPreset.ratio5x4,
-                CropAspectRatioPreset.ratio7x5,
-                CropAspectRatioPreset.ratio16x9
-              ],
-        androidUiSettings: AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: Colors.deepOrange,
-            toolbarWidgetColor: Colors.white,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
-          title: 'Cropper',
-        ));
+      sourcePath: image.path,
+      aspectRatioPresets: Platform.isAndroid
+          ? [
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio16x9
+            ]
+          : [
+              CropAspectRatioPreset.original,
+              CropAspectRatioPreset.square,
+              CropAspectRatioPreset.ratio3x2,
+              CropAspectRatioPreset.ratio4x3,
+              CropAspectRatioPreset.ratio5x3,
+              CropAspectRatioPreset.ratio5x4,
+              CropAspectRatioPreset.ratio7x5,
+              CropAspectRatioPreset.ratio16x9
+            ],
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false),
+      iosUiSettings: IOSUiSettings(
+        title: 'Cropper',
+      ),
+    );
     if (croppedFile != null) {
-      setState(() => image = croppedFile);
+      image = croppedFile;
       data = await TextRecon.detecFromFile(image);
-      print(data);
+      setState(() => print(data));
     }
   }
 
-  Widget _getForm() {
+  List<Widget> _getChildrenForm() {
+    return data == null
+        ? [_imageFile()]
+        : [
+            _imageFile(),
+            SizedBox(height: 10),
+            Center(
+              child: Text(
+                "DATOS MESA",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            data != null ? _getActa() : Container(),
+            SizedBox(height: 10),
+            Center(
+              child: Text(
+                "RECUENTO",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            data != null ? _getMesa() : Container(),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 25),
+              child: RaisedButton.icon(
+                onPressed: () {
+                  if (data != null) {
+                    print("PUSH DATA");
+                  } else {
+                    print("REJECT");
+                  }
+                },
+                icon: Icon(Icons.cloud_upload),
+                label: Text(
+                  "SUBIR",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "serif",
+                  ),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ),
+          ];
+  }
+
+  Widget _form() {
     return Form(
       key: formKey,
-      child: Container(),
+      child: Column(
+        children: _getChildrenForm(),
+      ),
     );
   }
 
-  List<Widget> _constructData() {
-    List<Widget> tmp = List();
-
-    // Act acta = data["acta"];
-    // List<List> locs = data["locs"];
-    // List<List> votos = data["votos"];
-    return tmp;
-  }
-
-  Widget _getActa(Act acta, ) {
+  Widget _getActa() {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextFormField(
+              textAlign: TextAlign.start,
+              onSaved: (val) => print("DEBUG"),
+              decoration: InputDecoration(
+                hintText: "\tCódigo Mesa",
+                prefixIcon: Icon(Icons.code),
+              ),
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: false,
+                signed: false,
+              ),
+              validator: (value) {
+                return num.tryParse(value) == null ? 'Número Requerido' : null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextFormField(
+              textAlign: TextAlign.start,
+              onSaved: (val) => print(val),
+              decoration: InputDecoration(
+                hintText: "\tNúmero",
+                prefixIcon: Icon(Icons.format_list_numbered_rtl),
+              ),
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: false,
+                signed: false,
+              ),
+              validator: (value) {
+                return num.tryParse(value) == null ? 'Número Requerido' : null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextFormField(
+              textAlign: TextAlign.start,
+              onSaved: (val) => print(val),
+              decoration: InputDecoration(
+                hintText: "\tLocalidad",
+                prefixIcon: Icon(Icons.not_listed_location),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
+  List<DataRow> _getDataRows() {
+    return data?.map((cols) {
+      return DataRow(cells: [
+        DataCell(Text(cols[1])),
+        DataCell(
+          TextFormField(
+            initialValue: cols[2].toString(),
+            textAlign: TextAlign.start,
+            onSaved: (val) => print("DEBUG"),
+            keyboardType: TextInputType.numberWithOptions(
+              decimal: false,
+              signed: false,
+            ),
+            validator: (value) {
+              return num.tryParse(value) == null ? 'Número Requerido' : null;
+            },
+          ),
+        ),
+        DataCell(
+          TextFormField(
+            initialValue: cols[3].toString(),
+            textAlign: TextAlign.start,
+            onSaved: (val) => print("DEBUG"),
+            keyboardType: TextInputType.numberWithOptions(
+              decimal: false,
+              signed: false,
+            ),
+            validator: (value) {
+              return num.tryParse(value) == null ? 'Número Requerido' : null;
+            },
+          ),
+        ),
+      ]);
+    })?.toList();
+  }
+
+  Widget _getMesa() {
+    return Container(
+      child: DataTable(
+        columns: [
+          DataColumn(label: Text("Partido")),
+          DataColumn(label: Text("Presidente")),
+          DataColumn(label: Text("Uninominal")),
+        ],
+        rows: _getDataRows(),
       ),
     );
   }
@@ -167,9 +317,5 @@ class _ActFormState extends State<ActForm> {
     // ignore: deprecated_member_use
     File picked = await ImagePicker.pickImage(source: imageSource);
     setState(() => image = picked);
-    if (image != null) {
-      data = await TextRecon.detecFromFile(image);
-      print(data);
-    }
   }
 }

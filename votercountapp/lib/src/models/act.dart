@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 class Act {
-  Act(
-      {this.codigo,
-      this.nro,
-      this.apertura,
-      this.cierre,
-      this.distrito,
-      this.recinto});
+  Act({
+    this.codigo,
+    this.nro,
+    this.apertura,
+    this.cierre,
+    this.distrito,
+    this.recinto,
+  });
 
   int codigo;
   int nro;
