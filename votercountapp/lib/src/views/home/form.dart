@@ -19,7 +19,7 @@ class _ActFormState extends State<ActForm> {
 
   File image;
   List<List> data;
-  Act acta = Act();
+  Act acta;
 
   @override
   Widget build(BuildContext context) {
@@ -135,66 +135,71 @@ class _ActFormState extends State<ActForm> {
       ),
     );
     if (croppedFile != null) {
-      image = croppedFile;
-      data = await TextRecon.detecFromFile(image);
+      data = await TextRecon.detecFromFile(image = croppedFile);
       setState(() => print(data));
     }
   }
 
   List<Widget> _getChildrenForm() {
-    return data == null
-        ? [_imageFile()]
-        : [
-            _imageFile(),
-            SizedBox(height: 10),
-            Center(
-              child: Text(
-                "DATOS MESA",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
+    List<Widget> tmp = [_imageFile()];
+    if (acta != null) {
+      tmp.addAll([
+        SizedBox(height: 10),
+        Center(
+          child: Text(
+            "DATOS MESA",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+        _getActa(),
+        SizedBox(height: 10),
+        Center(
+          child: Text(
+            "RECUENTO",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+      ].map((e) => e));
+    }
+    if (data != null) {
+      tmp.addAll([
+        SizedBox(height: 10),
+        _getMesa(),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 25),
+          child: RaisedButton.icon(
+            onPressed: () {
+              if (data != null) {
+                print("PUSH DATA");
+              } else {
+                print("REJECT");
+              }
+            },
+            icon: Icon(Icons.cloud_upload),
+            label: Text(
+              "SUBIR",
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                fontFamily: "serif",
               ),
             ),
-            SizedBox(height: 10),
-            data != null ? _getActa() : Container(),
-            SizedBox(height: 10),
-            Center(
-              child: Text(
-                "RECUENTO",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
-              ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
-            SizedBox(height: 10),
-            data != null ? _getMesa() : Container(),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 25),
-              child: RaisedButton.icon(
-                onPressed: () {
-                  if (data != null) {
-                    print("PUSH DATA");
-                  } else {
-                    print("REJECT");
-                  }
-                },
-                icon: Icon(Icons.cloud_upload),
-                label: Text(
-                  "SUBIR",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "serif",
-                  ),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-          ];
+          ),
+        ),
+      ].map((e) => e));
+    }
+    return tmp;
   }
 
   Widget _form() {
@@ -215,6 +220,7 @@ class _ActFormState extends State<ActForm> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: TextFormField(
+              initialValue: acta.codigo?.toString(),
               textAlign: TextAlign.start,
               onSaved: (val) => print("DEBUG"),
               decoration: InputDecoration(
@@ -233,6 +239,7 @@ class _ActFormState extends State<ActForm> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: TextFormField(
+              initialValue: acta.nro?.toString(),
               textAlign: TextAlign.start,
               onSaved: (val) => print(val),
               decoration: InputDecoration(
@@ -316,6 +323,9 @@ class _ActFormState extends State<ActForm> {
   _getImageFile(ImageSource imageSource) async {
     // ignore: deprecated_member_use
     File picked = await ImagePicker.pickImage(source: imageSource);
-    setState(() => image = picked);
+    if (picked != null) {
+      acta = await TextRecon.getAct(image = picked);
+      setState(() => print(acta));
+    }
   }
 }

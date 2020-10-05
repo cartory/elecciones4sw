@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'dart:io';
 
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:votercountapp/src/models/act.dart';
 
 double _getDx(List<Offset> points, Offset p) {
   return (points[0].dx - p.dx) + (points[3].dx - p.dx) / 2;
@@ -100,5 +101,48 @@ class TextRecon {
     txtrcon.close();
 
     return votes;
+  }
+
+  static Future<Act> getAct(File img) async {
+    final txtrcon = FirebaseVision.instance.textRecognizer();
+    final visiontxt = await txtrcon.processImage(
+      FirebaseVisionImage.fromFile(img),
+    );
+
+    Act acta = Act(
+      apertura: DateTime.now().toIso8601String(),
+      cierre: DateTime.now().toIso8601String(),
+    );
+
+    Offset mp;
+
+    visiontxt.blocks.forEach((block) {
+      if (block.text.toUpperCase().contains("O DE MESA") && mp == null) {
+        mp = middlePoint(block.cornerPoints);
+      } else if (block.text.toUpperCase().contains("MESA:")) {
+        if (mp != null) {
+          if (block.cornerPoints[0].dx < mp.dx) {
+            acta.nro = int.tryParse(_getDigits(block.text));
+          }
+        }
+      } else if (block.text.toUpperCase().contains("CIR.")) {
+        if (mp != null) {
+          if (block.cornerPoints[0].dx < mp.dx) {
+            acta.distrito = int.tryParse(_getDigits(block.text));
+          }
+        }
+      } else {
+        if (mp != null) {
+          if (block.cornerPoints[0].dx < mp.dx) {
+            if (acta.codigo == null) {
+              acta.codigo = int.tryParse(block.text);
+            }
+          }
+        }
+      }
+    });
+
+    txtrcon.close();
+    return acta;
   }
 }
