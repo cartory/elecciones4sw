@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Elecciones4SW',
       debugShowCheckedModeBanner: false,
       initialRoute: HomePage.route,
+      theme: ThemeData.light(),
       routes: {
         HomePage.route        : (_) => HomePage(),
         LoginPage.route       : (_) => LoginPage(),

@@ -4,11 +4,8 @@ import 'package:votercountapp/src/models/act.dart';
 // import 'package:votercountapp/src/models/env.dart' as env;
 
 class ActProvider {
-  store({Act act}) async {
-    try {
-      // final res = await http.post("url")
-    } catch (e) {
-      print(e);
-    }
+  static store({Act act, List<List> voters}) async {
+    print(act);
+    print(voters);
   }
 }

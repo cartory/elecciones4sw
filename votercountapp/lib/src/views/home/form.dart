@@ -6,6 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:votercountapp/src/models/act.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:votercountapp/src/providers/act.provider.dart';
 import 'package:votercountapp/src/providers/vision.service.dart';
 
 class ActForm extends StatefulWidget {
@@ -157,6 +158,10 @@ class _ActFormState extends State<ActForm> {
         SizedBox(height: 10),
         _getActa(),
         SizedBox(height: 10),
+      ].map((e) => e));
+    }
+    if (data != null) {
+      tmp.addAll([
         Center(
           child: Text(
             "RECUENTO",
@@ -167,22 +172,11 @@ class _ActFormState extends State<ActForm> {
           ),
         ),
         SizedBox(height: 10),
-      ].map((e) => e));
-    }
-    if (data != null) {
-      tmp.addAll([
-        SizedBox(height: 10),
         _getMesa(),
         Container(
           padding: EdgeInsets.symmetric(vertical: 25),
           child: RaisedButton.icon(
-            onPressed: () {
-              if (data != null) {
-                print("PUSH DATA");
-              } else {
-                print("REJECT");
-              }
-            },
+            onPressed: () => _onSubmitForm(),
             icon: Icon(Icons.cloud_upload),
             label: Text(
               "SUBIR",
@@ -222,7 +216,7 @@ class _ActFormState extends State<ActForm> {
             child: TextFormField(
               initialValue: acta.codigo?.toString(),
               textAlign: TextAlign.start,
-              onSaved: (val) => print("DEBUG"),
+              onSaved: (val) => _onSavedActa("codigo", val),
               decoration: InputDecoration(
                 hintText: "\tCódigo Mesa",
                 prefixIcon: Icon(Icons.code),
@@ -241,7 +235,7 @@ class _ActFormState extends State<ActForm> {
             child: TextFormField(
               initialValue: acta.nro?.toString(),
               textAlign: TextAlign.start,
-              onSaved: (val) => print(val),
+              onSaved: (val) => _onSavedActa("nro", val),
               decoration: InputDecoration(
                 hintText: "\tNúmero",
                 prefixIcon: Icon(Icons.format_list_numbered_rtl),
@@ -258,12 +252,32 @@ class _ActFormState extends State<ActForm> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: TextFormField(
+              initialValue: acta.distrito?.toString(),
               textAlign: TextAlign.start,
-              onSaved: (val) => print(val),
+              onSaved: (val) => _onSavedActa("distrito", val),
+              decoration: InputDecoration(
+                hintText: "\tDistrito",
+                prefixIcon: Icon(Icons.location_city),
+              ),
+              keyboardType: TextInputType.numberWithOptions(
+                decimal: false,
+                signed: false,
+              ),
+              validator: (value) {
+                return num.tryParse(value) == null ? 'Número Requerido' : null;
+              },
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: TextFormField(
+              textAlign: TextAlign.start,
+              onSaved: (val) => _onSavedActa("localidad", val),
               decoration: InputDecoration(
                 hintText: "\tLocalidad",
                 prefixIcon: Icon(Icons.not_listed_location),
               ),
+              validator: (val) => val.isEmpty ? 'Campo Requerido' : null,
             ),
           ),
         ],
@@ -279,13 +293,13 @@ class _ActFormState extends State<ActForm> {
           TextFormField(
             initialValue: cols[2].toString(),
             textAlign: TextAlign.start,
-            onSaved: (val) => print("DEBUG"),
+            onSaved: (val) => _onSavedData(val, party: cols[1], col: 2),
             keyboardType: TextInputType.numberWithOptions(
               decimal: false,
               signed: false,
             ),
             validator: (value) {
-              return num.tryParse(value) == null ? 'Número Requerido' : null;
+              return num.tryParse(value) == null ? 'Número' : null;
             },
           ),
         ),
@@ -293,7 +307,7 @@ class _ActFormState extends State<ActForm> {
           TextFormField(
             initialValue: cols[3].toString(),
             textAlign: TextAlign.start,
-            onSaved: (val) => print("DEBUG"),
+            onSaved: (val) => _onSavedData(val, party: cols[1], col: 3),
             keyboardType: TextInputType.numberWithOptions(
               decimal: false,
               signed: false,
@@ -326,6 +340,49 @@ class _ActFormState extends State<ActForm> {
     if (picked != null) {
       acta = await TextRecon.getAct(image = picked);
       setState(() => print(acta));
+    }
+  }
+
+  _onSavedActa(String field, String value) {
+    switch (field) {
+      case "codigo":
+        acta.codigo = int.tryParse(value);
+        break;
+      case "nro":
+        acta.nro = int.tryParse(value);
+        break;
+      case "distrito":
+        acta.distrito = int.tryParse(value);
+        break;
+      case "localidad":
+        acta.localidad = value;
+        break;
+      default:
+        return;
+    }
+  }
+
+  _onSavedData(String value, {String party, int col}) {
+    data?.forEach((cols) {
+      if (party == cols[1]) {
+        cols[col] = value;
+        return;
+      }
+    });
+  }
+
+  _onSubmitForm() async {
+    if (!formKey.currentState.validate()) return;
+    formKey.currentState.save();
+    try {
+      data?.forEach((cols) {
+        cols.removeAt(0);
+      });
+      await ActProvider.store(act: acta, voters: data);
+      // show snackbar
+      // clear data&acta
+    } catch (e) {
+      print(e);
     }
   }
 }

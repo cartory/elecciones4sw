@@ -8,12 +8,14 @@ class Act {
     this.cierre,
     this.distrito,
     this.recinto,
+    this.localidad,
   });
 
   int codigo;
   int nro;
   String apertura;
   String cierre;
+  String localidad;
   int distrito;
   int recinto;
 
@@ -23,12 +25,14 @@ class Act {
 
   factory Act.fromJson(Map<String, dynamic> json) {
     return Act(
-        codigo: json["codigo"],
-        nro: json["nro"],
-        apertura: json["apertura"],
-        cierre: json["cierre"],
-        distrito: json["distrito"],
-        recinto: json["recinto"]);
+      codigo: json["codigo"],
+      nro: json["nro"],
+      apertura: json["apertura"],
+      cierre: json["cierre"],
+      distrito: json["distrito"],
+      recinto: json["recinto"],
+      localidad: json["localidad"],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +42,7 @@ class Act {
       "apertura": apertura,
       "cierre": cierre,
       "recinto": recinto,
+      "localidad": localidad,
     };
   }
 }

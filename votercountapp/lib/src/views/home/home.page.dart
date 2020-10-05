@@ -19,41 +19,41 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: _appBar,
       body: ActForm(),
-      bottomNavigationBar: _bottomNavigationBar,
+      // bottomNavigationBar: _bottomNavigationBar,
     );
   }
 }
 
-final _bottomNavigationBar = BottomNavigationBar(
-  type: BottomNavigationBarType.fixed,
-  backgroundColor: Color.fromRGBO(157, 101, 201, 1),
-  selectedItemColor: Colors.white,
-  unselectedItemColor: Colors.white.withOpacity(.6),
-  selectedFontSize: 14,
-  unselectedFontSize: 14,
-  onTap: (value) => print("onTap"),
-  items: [
-    BottomNavigationBarItem(
-      title: Text('Salir'),
-      icon: Icon(Icons.exit_to_app),
-    ),
-    BottomNavigationBarItem(
-      title: Text('Imágenes'),
-      icon: Icon(Icons.dashboard),
-    ),
-  ],
-);
+// final _bottomNavigationBar = BottomNavigationBar(
+//   type: BottomNavigationBarType.fixed,
+//   backgroundColor: Color.fromRGBO(157, 101, 201, 1),
+//   selectedItemColor: Colors.white,
+//   unselectedItemColor: Colors.white.withOpacity(.6),
+//   selectedFontSize: 14,
+//   unselectedFontSize: 14,
+//   onTap: (value) => print("onTap"),
+//   items: [
+//     BottomNavigationBarItem(
+//       title: Text('Salir'),
+//       icon: Icon(Icons.exit_to_app),
+//     ),
+//     BottomNavigationBarItem(
+//       title: Text('Imágenes'),
+//       icon: Icon(Icons.dashboard),
+//     ),
+//   ],
+// );
 
 final _appBar = AppBar(
   elevation: 50,
   centerTitle: true,
-  toolbarHeight: 100,
+  toolbarHeight: 80,
   brightness: Brightness.dark,
   excludeHeaderSemantics: false,
   title: Text("Elecciones Bolivia 2020"),
   shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
-      bottomRight: Radius.circular(50),
+      bottomRight: Radius.circular(30),
     ),
     side: BorderSide(
       color: Colors.blue,

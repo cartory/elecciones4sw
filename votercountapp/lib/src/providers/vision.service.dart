@@ -87,10 +87,10 @@ class TextRecon {
           Offset o = cols[0];
           if (o.dy < pb.dy && pb.dy < o.dy + dy / 2) {
             if (o.dx < pb.dx && pb.dx < o.dx + dx) {
-              print("C1:${cols[1]}\t$digits");
+              // print("C1:${cols[1]}\t$digits");
               cols[2] = int.parse(digits);
             } else {
-              print("C2:${cols[1]}\t$digits");
+              // print("C2:${cols[1]}\t$digits");
               cols[3] = int.parse(digits);
             }
           }
