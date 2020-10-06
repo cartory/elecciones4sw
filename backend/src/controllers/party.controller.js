@@ -69,26 +69,30 @@ class PartyController {
 
     static async byLocation(req, res) {
         const { loc } = req.params;
-        const query = await sequelize.query(`
-            select 
-                p.id, p.acronym, p.name, 
-                sum(v.amount) as votos, sum(v.whites) as blancos, sum(v.nulls) as nulos
-            from
-                public."Parties" 	as p, public."Votes" 		as v, 
-                public."Tables" 	as t, public."Locations" 	as l
-            where	p.id 			= v.party_id 
-
-            and 	v.table_id 		= t.id
-            and		t.location_id 	= l.id
-            and     l.name like '%${loc.toLowerCase()}%'
-            group by p.id
-            order by p.id`,
-            {
-                model: Party,
-                mapToModel: true,
-            }
-        );
-        res.json(query);
+        try {
+            const query = await sequelize.query(`
+                select 
+                    p.id, p.acronym, p.name, 
+                    sum(v.amount) as votes, sum(v.whites) as whites, sum(v.nulls) as nulls
+                from
+                    public."Parties" 	as p, public."Votes" 		as v, 
+                    public."Tables" 	as t, public."Locations" 	as l
+                where	p.id 			= v.party_id 
+    
+                and 	v.table_id 		= t.id
+                and		t.location_id 	= l.id
+                and     l.name like '%${loc.toLowerCase()}%'
+                group by p.id
+                order by p.id`,
+                {
+                    model: Party,
+                    mapToModel: true,
+                }
+            );
+            res.json(query);
+        } catch (error) {
+            res.json([]);   
+        }
     }
 }
 
