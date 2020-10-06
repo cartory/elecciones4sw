@@ -11,13 +11,11 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 
 export class CandidatesComponent implements OnInit {
 
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
-
   constructor(
     public partyService: PartyService,
     public downloadService: DownloadService,
     _config: NgbCarouselConfig
-  ) { 
+  ) {
     _config.interval = 1100;
     _config.wrap = true;
     _config.keyboard = true;

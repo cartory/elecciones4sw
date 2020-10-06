@@ -1,3 +1,3 @@
 export const env = {
-    api_url: "http://localhost:3000/api/",
+    api_url: "https://elecciones4sw.herokuapp.com/api",
 }

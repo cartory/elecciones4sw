@@ -43,7 +43,7 @@ export class ResultsComponent implements OnInit {
     let myChart = new Chart("myChart", {
       type: 'pie',
       data: {
-        labels: this.partyService.parties.map(e => e.acronym),
+        labels: this.partyService.parties.map(e => e.acronym.split(",")[0]),
         datasets: [{
           label: '# of Votes',
           data: [
