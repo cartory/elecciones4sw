@@ -7,7 +7,7 @@ class Act {
     this.apertura,
     this.cierre,
     this.distrito,
-    this.recinto,
+    // this.recinto,
     this.localidad,
   });
 
@@ -17,7 +17,7 @@ class Act {
   String cierre;
   String localidad;
   int distrito;
-  int recinto;
+  // int recinto;
 
   factory Act.fromRawJson(String str) => Act.fromJson(json.decode(str));
 
@@ -30,7 +30,7 @@ class Act {
       apertura: json["apertura"],
       cierre: json["cierre"],
       distrito: json["distrito"],
-      recinto: json["recinto"],
+      // recinto: json["recinto"],
       localidad: json["localidad"],
     );
   }
@@ -41,7 +41,7 @@ class Act {
       "nro": nro.toString(),
       "apertura": apertura,
       "cierre": cierre,
-      "recinto": recinto.toString(),
+      // "recinto": recinto.toString(),
       "localidad": localidad,
     };
   }
