@@ -10,9 +10,9 @@ function authDB() {
 }
 async function seedDB() {
     authDB();
-    // await PartySeeder.seed();
-    // await LocationSeeder.seed();
-    await PersonSeeder.seed_ADN_politics();
+    await PartySeeder.seed();
+    await LocationSeeder.seed();
+    // await PersonSeeder.seed_ADN_politics();
 }
 
 seedDB();

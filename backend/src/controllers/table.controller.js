@@ -6,16 +6,13 @@ const getID_from_array_locs = async ({ locs = [] }) => {
     let id = 1;
     try {
         let i = 0;
-        let loc = await Location.findOne({
-            where: { name: { [Op.like]: `%${locs[i]}%` } }
-        });
-
-        while (i++ < locs.length && loc) {
-            console.log(loc.dataValues);
-            id = loc.dataValues.id;
-            loc = await Location.findOne({
-                where: { name: { [Op.like]: `%${locs[i]}%` } }
+        while (true) {
+            const loc = await Location.findOne({
+                where: { name: { [Op.like]: `%${locs[i++].toLowerCase()}%` } }
             });
+            if (!loc) break;
+            if (i >= locs.length) break;
+            id = loc.dataValues.id;
         }
     } catch (e) {
         console.error(e);
@@ -57,73 +54,61 @@ class TableController {
         const acta = JSON.parse(req.body.acta);
         const votos = JSON.parse(req.body.votos);
 
-        for (const key in votos) {
-            console.log(key);
+        const location_id = await getID_from_array_locs({
+            locs: acta["localidad"].split(",")
+        });
+
+        try {
+            const _table = await Table.create({
+                code: acta["codigo"],
+                number: acta["nro"],
+                open: acta["apertura"],
+                close: acta["cierre"],
+                location_id,
+            }, {
+                fields: [
+                    "code", "number", "open", "close", "location_id"
+                ]
+            });
+
+            const _votes = [];
+            let _nulls = 0;
+            let _whites = 0;
+
+            for (const key in votos) {
+                const party = await get_Party_from_name(key);
+                const col = votos[key].split(",");
+                const amount = parseInt(col[0]) + parseInt(col[1]);
+                if (key.includes("BLANCO")) {
+                    _whites = amount;
+                } else if (key.includes("NULO")) {
+                    _nulls = amount;
+                } else {
+                    let party_id = party ? party.dataValues.id : 1;
+                    _votes.push({ amount, position: "presidente&candidato", party_id });
+                }
+            }
+
+            for (let i = 0; i < _votes.length; i++) {
+                await Vote.create({
+                    amount: _votes[i].amount,
+                    position: _votes[i].position,
+                    whites: i == 0 ? _whites : 0,
+                    nulls: i == 0 ? _nulls : 0,
+                    party_id: _votes[i].party_id,
+                    table_id: _table.dataValues.id
+                }, {
+                    fields: [
+                        "amount", "position", "whites",
+                        "nulls", "party_id", "table_id"
+                    ]
+                });
+            }
+            res.json({ success: true });
+        } catch (e) {
+            console.error(e);
+            res.json({ success: false, e });
         }
-        /**
-         * 0. getLocID from str,str,str,... <<<<
-         * 1. Creates Table & Obtains ID  <<<<
-         * 2. Get partyID from name ... lol  
-         * 3. Insert to Table with ListData and tableID&partyID
-         */
-
-        // const location_id = await getID_from_array_locs({
-        //     locs: acta["localidad"].split(",")
-        // });
-        
-        // console.log(location_id);
-
-        // const _table = await Table.create({
-        //     code: acta["codigo"],
-        //     number: acta["nro"],
-        //     open: acta["apertura"],
-        //     close: acta["cierre"],
-        //     location_id
-        // }, {
-        //     fields: [
-        //         "code", "number", "open", "close", "location_id"
-        //     ]
-        // });
-
-        // console.log(_table.dataValues);
-        
-        // const _votes = [];
-        // let _nulls = 0;
-        // let _whites = 0;
-        
-        // for (const key in votos) {
-        //     const party = await get_Party_from_name(key);
-        //     const col = votos[key].split(",");
-        //     const amount = parseInt(col[0]) + parseInt(col[1]);
-        //     if (key.includes("BLANCO")) {
-        //         _whites = amount;
-        //     } else if (key.includes("NULO")) {
-        //         _nulls = amount;
-        //     } else {
-        //         let party_id = party ? party.dataValues.id : 1;
-        //         _votes.push({ amount, position: "presidente&candidato", party_id });
-        //     }
-        // }
-
-        // console.log(_votes);
-
-        // for (let i = 0; i < _votes.length; i++) {
-        //     await Vote.create({
-        //         amount: _votes[i].amount,
-        //         position: _votes[i].position,
-        //         whites: i == 0 ? _whites : 0,
-        //         nulls: i == 0 ? _nulls : 0,
-        //         party_id: _votes[i].party_id,
-        //         table_id: _table.dataValues.id
-        //     }, {
-        //         fields: [
-        //             "amount", "position", "whites",
-        //             "nulls", "party_id", "table_id"
-        //         ]
-        //     });
-        // }
-
-        res.json(req.body);
     }
 
     static update(req, res) {

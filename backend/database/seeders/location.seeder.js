@@ -7,7 +7,7 @@ const seed_precincts = async ({ number_to_create = 10, location_id = null }) => 
     while (number_to_create-- > 0) {
         await Location.create({
             type: LocType.PRECINCT,
-            name: faker.address.streetAddress(true),
+            name: faker.address.streetAddress(true).toLowerCase(),
             district: null, location_id
         }, {
             fields: [
@@ -18,46 +18,51 @@ const seed_precincts = async ({ number_to_create = 10, location_id = null }) => 
 }
 
 const seed_locations = async ({ obj, type, district = null, location_id = null }) => {
-    const _location = await Location.create({
-        type,
-        name: (Array.isArray(obj)) ? obj[0] : obj,
-        district, location_id
-    }, {
-        fields: [
-            "type", "name", "district", "location_id"
-        ]
-    });
-
-    switch (type) {
-        case LocType.COUNTRY:
-            type = LocType.DEPARTMENT;
-            break;
-        case LocType.DEPARTMENT:
-            type = LocType.PROVINCE;
-            break;
-        case LocType.PROVINCE:
-            type = LocType.MUNICIPALITY;
-            break;
-        case LocType.MUNICIPALITY:
-            type = LocType.DISTRICT;
-            break;
-        case LocType.DISTRICT:
-            type = LocType.PRECINCT;
-            break;
-        default: return;
-    }
-
-    if (Array.isArray(obj)) {
-        obj[1].forEach(async (child) => {
-            await seed_locations({
-                obj: child,
-                type,
-                location_id: _location.dataValues.id
-            });
+    try {
+        const _location = await Location.create({
+            type,
+            name: (Array.isArray(obj)) ? obj[0].toLowerCase() : obj.toLowerCase(),
+            district, location_id
+        }, {
+            fields: [
+                "type", "name", "district", "location_id"
+            ]
         });
-    } else {
-        await seed_precincts({ number_to_create: 5, location_id: _location.dataValues.id });
+
+        switch (type) {
+            case LocType.COUNTRY:
+                type = LocType.DEPARTMENT;
+                break;
+            case LocType.DEPARTMENT:
+                type = LocType.PROVINCE;
+                break;
+            case LocType.PROVINCE:
+                type = LocType.MUNICIPALITY;
+                break;
+            case LocType.MUNICIPALITY:
+                type = LocType.DISTRICT;
+                break;
+            case LocType.DISTRICT:
+                type = LocType.PRECINCT;
+                break;
+            default: return;
+        }
+
+        if (Array.isArray(obj)) {
+            obj[1].forEach(async (child) => {
+                await seed_locations({
+                    obj: child,
+                    type,
+                    location_id: _location.dataValues.id
+                });
+            });
+        } else {
+            await seed_precincts({ number_to_create: 5, location_id: _location.dataValues.id });
+        }
+    } catch (error) {
+        console.error("ERROR");
     }
+
 }
 
 class LocationSeeder {
