@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -18,9 +19,9 @@ class _ActFormState extends State<ActForm> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  Act acta;
   File image;
   List<List> data;
-  Act acta;
 
   @override
   Widget build(BuildContext context) {
@@ -142,10 +143,31 @@ class _ActFormState extends State<ActForm> {
   }
 
   List<Widget> _getChildrenForm() {
-    List<Widget> tmp = [_imageFile()];
+    List<Widget> tmp = [
+      _imageFile(),
+      Container(
+        padding: EdgeInsets.only(top: 30),
+        child: Text(
+          "Agregue Imagen",
+          style: TextStyle(
+            fontSize: 27,
+            color: Colors.blueAccent,
+            fontWeight: FontWeight.bold,
+            fontFamily: "serif",
+          ),
+        ),
+      ),
+      Container(
+        child: Icon(
+          Icons.cloud_upload,
+          size: 150,
+          color: Colors.blueAccent,
+        ),
+      ),
+    ];
     if (acta != null) {
       tmp.addAll([
-        SizedBox(height: 10),
+        SizedBox(height: 12),
         Center(
           child: Text(
             "DATOS MESA",
@@ -374,14 +396,51 @@ class _ActFormState extends State<ActForm> {
   _onSubmitForm() async {
     if (!formKey.currentState.validate()) return;
     formKey.currentState.save();
+
     try {
-      data?.forEach((cols) {
-        cols.removeAt(0);
-      });
+      if (data[0].length > 3) {
+        data?.forEach((cols) => cols.removeAt(0));
+      }
       await ActProvider.store(act: acta, voters: data);
       // show snackbar
+      Flushbar(
+        isDismissible: true,
+        message: "REGISTRO EXITÓSO !!",
+        messageText: Text(
+          "Acta Registrada!!",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
+          ),
+        ),
+        icon: Icon(Icons.check_circle, color: Colors.green),
+        backgroundColor: Colors.white,
+        duration: Duration(seconds: 3),
+        leftBarIndicatorColor: Colors.green,
+      )..show(context);
       // clear data&acta
+      setState(() => data = acta = image = null);
     } catch (e) {
+      Flushbar(
+        isDismissible: true,
+        message: "Error Inesperado !!",
+        messageText: Text(
+          "Ups, Algo Salió mal!!",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
+          ),
+        ),
+        icon: Icon(
+          Icons.error,
+          color: Colors.red,
+        ),
+        backgroundColor: Colors.white,
+        duration: Duration(seconds: 3),
+        leftBarIndicatorColor: Colors.red,
+      )..show(context);
       print(e);
     }
   }

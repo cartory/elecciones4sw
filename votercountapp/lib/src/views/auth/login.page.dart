@@ -1,4 +1,6 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:votercountapp/src/models/person.dart';
 
 import 'package:votercountapp/src/models/user.dart';
 import 'package:votercountapp/src/views/home/home.page.dart';
@@ -34,8 +36,50 @@ class _LoginPageState extends State<LoginPage> {
     _submitButtonForm() async {
       if (!_formKey.currentState.validate()) return;
       _formKey.currentState.save();
-      if (await AuthService.trySignIn(_user)) {
+      final authRes = await AuthService.trySignIn(_user);
+      if (authRes["auth"]) {
+        HomePage.person = Person.fromJson(authRes["data"]);
+        HomePage.token = authRes["token"];
         Navigator.pushReplacementNamed(context, HomePage.route);
+        Flushbar(
+          isDismissible: true,
+          message: "Aviso Auth!!",
+          messageText: Text(
+            "Bienvenido ${HomePage.person.names}!!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 20,
+            ),
+          ),
+          icon: Icon(
+            Icons.home,
+            color: Colors.blue,
+          ),
+          backgroundColor: Colors.white,
+          duration: Duration(seconds: 3),
+          leftBarIndicatorColor: Colors.blue,
+        )..show(context);
+      } else {
+        Flushbar(
+          isDismissible: true,
+          message: "Aviso Auth!!",
+          messageText: Text(
+            "Aviso Usuario/Contraseña!!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 20,
+            ),
+          ),
+          icon: Icon(
+            Icons.warning,
+            color: Colors.orangeAccent,
+          ),
+          backgroundColor: Colors.white,
+          duration: Duration(seconds: 3),
+          leftBarIndicatorColor: Colors.orangeAccent,
+        )..show(context);
       }
     }
 
