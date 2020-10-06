@@ -37,11 +37,11 @@ class Act {
 
   Map<String, dynamic> toJson() {
     return {
-      "codigo": codigo,
-      "nro": nro,
+      "codigo": codigo.toString(),
+      "nro": nro.toString(),
       "apertura": apertura,
       "cierre": cierre,
-      "recinto": recinto,
+      "recinto": recinto.toString(),
       "localidad": localidad,
     };
   }
