@@ -145,25 +145,29 @@ class _ActFormState extends State<ActForm> {
   List<Widget> _getChildrenForm() {
     List<Widget> tmp = [
       _imageFile(),
-      Container(
-        padding: EdgeInsets.only(top: 30),
-        child: Text(
-          "Agregue Imagen",
-          style: TextStyle(
-            fontSize: 27,
-            color: Colors.blueAccent,
-            fontWeight: FontWeight.bold,
-            fontFamily: "serif",
-          ),
-        ),
-      ),
-      Container(
-        child: Icon(
-          Icons.cloud_upload,
-          size: 150,
-          color: Colors.blueAccent,
-        ),
-      ),
+      acta == null
+          ? Container(
+              padding: EdgeInsets.only(top: 30),
+              child: Text(
+                "Agregue Imagen",
+                style: TextStyle(
+                  fontSize: 27,
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "serif",
+                ),
+              ),
+            )
+          : Container(),
+      acta == null
+          ? Container(
+              child: Icon(
+                Icons.cloud_upload,
+                size: 150,
+                color: Colors.blueAccent,
+              ),
+            )
+          : Container(),
     ];
     if (acta != null) {
       tmp.addAll([
