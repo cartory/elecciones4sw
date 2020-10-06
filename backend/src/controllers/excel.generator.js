@@ -41,6 +41,11 @@ class ExcelGenerator {
                 .catch(e => res.json(e));
         }).catch(e => res.json(e));
     }
+
+    static recount_xlsx(req, res) {
+        console.log(req.body);
+        res.json(req.body);
+    }
 }
 
 module.exports = { ExcelGenerator };

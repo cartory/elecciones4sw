@@ -17,6 +17,7 @@ router
     .get("/parties/:id", PartyController.find)
     .put("/parties/:id", PartyController.update)
     .delete("/parties/:id", PartyController.destroy)
+    .get("/parties/votes/get/:loc", PartyController.byLocation)
     .get("/parties/candidates/:acro", PartyController.candidates)
     // LOCATIONS
     .get("/locations", LocationController.all)
@@ -24,7 +25,7 @@ router
     .get("/locations/:id", LocationController.get)
     .put("/locations/:id", LocationController.update)
     .delete("/locations/:id", LocationController.destroy)
-    // TABLES
+    // TABLES&VOTES
     .get("/tables", TableController.all)
     .post("/tables", TableController.store)
     .get("/tables/:id", TableController.find)
@@ -35,6 +36,7 @@ router
     .get("/persons/count", PersonController.count)
     //  EXCEL OR PDF
     .get("/voters", ExcelGenerator.voters_xlsx)
+    .post("/votes/count", ExcelGenerator.recount_xlsx)
     // LOGIN
     .post("/signup", PersonController.register)
     .get("/me", verifyToken, PersonController.profile)

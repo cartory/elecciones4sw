@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const { Person } = require("../database/associations");
-const { Party } = require("../models/party");
+const { Person, Party} = require("../database/associations");
 
 const generate_token = (id) => {
     return jwt.sign({ id }, process.env.SECRET, { expiresIn: 3600 });

@@ -48,7 +48,7 @@ class PartySeeder {
         const pdfs = [
             "https://firebasestorage.googleapis.com/v0/b/eleccion4sw.appspot.com/o/CC_candidatos_2019.pdf?alt=media&token=6e64f6ea-bf57-43c6-8bd1-e25d2811df17",
             "https://firebasestorage.googleapis.com/v0/b/eleccion4sw.appspot.com/o/FPV_candidatos_2019.pdf?alt=media&token=0f6e3d65-9d4d-41ad-98fc-6593e99ecc22",
-            "https://firebasestorage.googleapis.com/v0/b/eleccion4sw.appspot.com/o/FPV_candidatos_2019.pdf?alt=media&token=0f6e3d65-9d4d-41ad-98fc-6593e99ecc22",
+            "https://firebasestorage.googleapis.com/v0/b/eleccion4sw.appspot.com/o/MTS_candidatos_2019.pdf?alt=media&token=7fa3e124-228d-4ff0-9917-e502651e604b",
 
             "https://firebasestorage.googleapis.com/v0/b/eleccion4sw.appspot.com/o/UCS_candidatos_2019.pdf?alt=media&token=29d37c6b-6734-4372-9c94-a0b1ad77758d",
             "https://firebasestorage.googleapis.com/v0/b/eleccion4sw.appspot.com/o/MAS_candidatos_2019.pdf?alt=media&token=b544142e-7fe3-4a28-87d7-809315efbe4b",
