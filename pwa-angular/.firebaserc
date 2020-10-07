@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "eleccion4sw"
+    "default": "eleccion4sw",
+    "elecciones": "eleccion4sw"
   }
 }

@@ -42,9 +42,7 @@ export class ResultsComponent implements OnInit {
   onKey(event: any) {
     this.location = event.target.value;
     if (this.location.length > 0) {
-      console.log(this.location);
       if (event.key == 'Enter') {
-        console.log(`GET VOTES\t${this.location}`);
         this.partyService.get_parties_votes(this.location).subscribe(
           res => {
             this.partyService.parties_votes = res;
