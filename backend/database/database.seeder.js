@@ -3,7 +3,7 @@ const sequelize = require("../src/database/sequelize");
 const { PartySeeder } = require("./seeders/party.seeder");
 const { LocationSeeder } = require("./seeders/location.seeder");
 const { seedVoters } = require("./seeders/voter.seeder");
-const { seed_votes } = require("./seeders/table-vote.seeder");
+const { seed_votes, generate_votes } = require("./seeders/table-vote.seeder");
 
 function authDB() {
     sequelize
@@ -13,7 +13,8 @@ function authDB() {
 
 async function seedDB() {
     await sequelize.authenticate();
-    await seed_votes();
+    // await seed_votes();
+    await generate_votes(1);
     // await PartySeeder.seed();
     // await LocationSeeder.seed();
     // await PersonSeeder.seed_ADN_politics();

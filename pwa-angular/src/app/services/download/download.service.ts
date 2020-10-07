@@ -8,7 +8,7 @@ export class DownloadService {
 
   constructor(private http: HttpClient) { }
 
-  public default = "warnes";
+  public default = "bolivia";
 
   voters_XLS_url() {
     return `${env.api_url}/voters`;
