@@ -10,6 +10,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { VotersComponent } from './components/voters/voters.component';
 import { ResultsComponent } from './components/results/results.component';
 import { CandidatesComponent } from './components/candidates/candidates.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { CandidatesComponent } from './components/candidates/candidates.componen
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]
