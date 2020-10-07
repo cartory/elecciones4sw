@@ -11,3 +11,8 @@ div {
 h1, h2, h3 {
   text-align: center;
 }
+
+.form {
+  display: contents;
+  align-items: center;
+}

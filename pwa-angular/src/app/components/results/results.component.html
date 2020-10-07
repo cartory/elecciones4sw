@@ -1,16 +1,33 @@
 <section id="results">
     <div class="container">
-        <h1 style="font-size: 380%; padding: 2% 2%;"><strong>RESULTADOS</strong> ELECCIONES 2020</h1>
+        <h1 style="font-size: 380%; padding: 2% 2%;"><strong>RESULTADOS</strong> VOTOS 2019</h1>
         <div class="container col-12 col-sm-12">
             <canvas id="myChart"></canvas>
         </div>
+        <br>
+        <div class="container col-12 col-sm-12" style="padding: 10 10;">
+            <div class="container form">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Localidad" (keyup)="onKey($event)"
+                        placeholder="Nombre Localidad" aria-placeholder="Nombre Localidad">
+                    <div class="input-group-text">
+                        <input type="checkbox" aria-label="Checkbox for following text input" (click)="changeChart()">
+                    </div>
+                    <div class="input-group-text">{{ type_chart }}</div>
+                </div>
+                <a href="#results" class="btn btn-outline-info download">
+                    <span class="fa fa-cloud-download"></span> Obtener Resultados
+                </a>
+            </div>
+        </div>
         <div class="container col-12 col-sm-12">
+            <p>{{values}}</p>
             <h1>Conteo de votos en tiempo real!!</h1>
             <h2>Tiempo para la finalizacion!</h2>
             <h3><strong>{{demo}}</strong></h3>
-            <a href="#results" class="btn btn-outline-info download">
-                <span class="fa fa-cloud-download"></span> Obtener Resultados
-            </a>
         </div>
     </div>
 </section>
