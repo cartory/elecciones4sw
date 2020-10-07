@@ -18,6 +18,6 @@ export class DownloadService {
     if (location.length == 0) {
       location = this.default;
     }
-    return `${env.api_url}/votes/count/${location}`;
+    return `${env.api_url}/votes/excel/${location}`;
   }
 }

@@ -31,7 +31,6 @@ export class ResultsComponent implements OnInit {
       },
       err => console.error(err)
     );
-    this.downloadService.chart_to_excel_XLSX_url
   }
 
   changeChart() {
