@@ -18,7 +18,7 @@ export class LogoComponent implements OnInit {
   }
 
   private loadCanvas() {
-    this.canvas.nativeElement.width = 300;
+    this.canvas.nativeElement.width = 285;
     this.canvas.nativeElement.height = 480;
     // 
     const k = 2.2;
