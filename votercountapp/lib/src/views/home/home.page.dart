@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
       toolbarHeight: 80,
       brightness: Brightness.dark,
       excludeHeaderSemantics: false,
-      title: Text("Delegado - ${HomePage.person.party.acronym}"),
+      title: Text("Delegado - ${HomePage.person.party.acronym.split(",")[0]}"),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(30),
