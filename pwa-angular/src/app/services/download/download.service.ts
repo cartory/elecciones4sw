@@ -8,11 +8,16 @@ export class DownloadService {
 
   constructor(private http: HttpClient) { }
 
+  public default = "warnes";
+
   voters_XLS_url() {
     return `${env.api_url}/voters`;
   }
 
-  candidates_PDF_url() {
-    return `${env.api_url}/candidates`;  
+  chart_to_excel_XLSX_url(location: string = this.default) {
+    if (location.length == 0) {
+      location = this.default;
+    }
+    return `${env.api_url}/votes/count/${location}`;
   }
 }

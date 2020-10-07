@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Chart from 'chart.js'
 import { PartyVote } from 'src/app/models/party_vote';
 import { PartyService } from 'src/app/services/party/party.service';
+import { DownloadService } from 'src/app/services/download/download.service';
 
 @Component({
   selector: 'app-results',
@@ -18,21 +19,23 @@ export class ResultsComponent implements OnInit {
   countDownDate = new Date("october 9, 2020 00:00:00").getTime();
 
   constructor(
-    private partyService: PartyService
+    public partyService: PartyService,
+    public downloadService: DownloadService
   ) { }
 
   ngOnInit() {
-    this.partyService.get_parties_votes("warnes").subscribe(
+    this.partyService.get_parties_votes(this.downloadService.default).subscribe(
       res => {
         this.partyService.parties_votes = res;
         this.loadChart(res);
       },
       err => console.error(err)
     );
+    this.downloadService.chart_to_excel_XLSX_url
   }
 
   changeChart() {
-    this.type_chart = (this.type_chart == "pie") ? "bar": "pie";
+    this.type_chart = (this.type_chart == "pie") ? "bar" : "pie";
     this.loadChart(this.partyService.parties_votes);
   }
 
