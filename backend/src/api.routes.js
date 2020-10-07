@@ -36,7 +36,7 @@ router
     .get("/persons/count", PersonController.count)
     //  EXCEL OR PDF
     .get("/voters", ExcelGenerator.voters_xlsx)
-    .post("/votes/count", ExcelGenerator.recount_xlsx)
+    .get("/votes/excel/:loc", ExcelGenerator.recount_xlsx)
     // LOGIN
     .post("/signup", PersonController.register)
     .get("/me", verifyToken, PersonController.profile)
